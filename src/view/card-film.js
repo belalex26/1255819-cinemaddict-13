@@ -7,7 +7,7 @@ export const createCardFilm = () => {
     <span class="film-card__duration">0m</span>
     <span class="film-card__genre">genre</span>
   </p>
-  <img src="./images/posters/900x1366.png" alt="" class="film-card__poster">
+  <img src="./images/posters/santa-claus-conquers-the-martians.jpg" alt="" class="film-card__poster">
   <p class="film-card__description">description</p>
   <a class="film-card__comments">0 comments</a>
   <div class="film-card__controls">
