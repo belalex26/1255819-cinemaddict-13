@@ -15,8 +15,6 @@ import {createStatistics} from "./view/statistics";
 
 const siteMain = document.querySelector(`body`);
 const siteHeader = siteMain.querySelector(`.header`);
-const siteFooter = siteMain.querySelector(`.footer`);
-const footerStats = siteFooter.querySelector(`.footer__statistics`);
 
 const FILMS_CARDS_NUMBER = 5;
 const FILMS_TOP_RATED_CARDS_NUMBER = 2;
@@ -75,13 +73,16 @@ render(filmsContainer, createMostCommentedContainer());
 
 const topRatedFilmsContainer = filmsContainer.querySelector(`.films-list--extra .films-list__container`);
 for (let i = 0; i < FILMS_TOP_RATED_CARDS_NUMBER; i++) {
-  render(topRatedFilmsContainer, createCardFilm());
+  render(topRatedFilmsContainer, createCardFilm(filmCard[i]));
 }
 
 const mostCommentedFilmsContainer = filmsContainer.querySelector(`.films-list--commented .films-list__container`);
 for (let i = 0; i < FILMS_MOST_COMMENTED_CARDS_NUMBER; i++) {
-  render(mostCommentedFilmsContainer, createCardFilm());
+  render(mostCommentedFilmsContainer, createCardFilm(filmCard[i]));
 }
+
+const siteFooter = siteMain.querySelector(`.footer`);
+const footerStats = siteFooter.querySelector(`.footer__statistics`);
 
 render(footerStats, createTotalFilmsTemplate());
 render(siteMain, createStatistics(rank));

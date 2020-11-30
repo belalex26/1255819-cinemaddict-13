@@ -2,7 +2,7 @@ import {createCardFilm} from "./card-film";
 import {getRandomInteger} from '../utils';
 
 const createCardsForRecommend = (count, filmCard) => {
-  let result = ` `;
+  const result = ``;
   for (let x = 0; x < count; x++) {
     const randomFilmCard = getRandomInteger(0, filmCard.length - 1);
     result += createCardFilm(filmCard[randomFilmCard]);
