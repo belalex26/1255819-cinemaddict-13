@@ -1,8 +1,8 @@
 export const createCardFilm = (filmCard) => {
-  const {nameFilm, poster, description, raiting, genre, comments, year, duration} = filmCard;
+  const {filmName, poster, description, raiting, genre, comments, year, duration} = filmCard;
   const yearCard = year.slice(-4);
   return `<article class="film-card">
-  <h3 class="film-card__title">${nameFilm}</h3>
+  <h3 class="film-card__title">${filmName}</h3>
   <p class="film-card__rating">${raiting}</p>
   <p class="film-card__info">
     <span class="film-card__year">${yearCard}</span>
