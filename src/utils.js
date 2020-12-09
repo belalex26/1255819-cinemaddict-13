@@ -15,3 +15,10 @@ export const createElement = (template) => {
 
   return newElement.firstChild;
 };
+
+export const EMOTIONS = [
+  `smile`,
+  `sleeping`,
+  `puke`,
+  `angry`
+];

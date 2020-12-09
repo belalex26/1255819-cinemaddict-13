@@ -1,9 +1,11 @@
-import dayjs from 'dayjs';
 import {getRandomInteger} from '../utils';
+import {EMOTIONS} from '../utils.js';
 
+const minNumberOfOffers = 1;
+const maxNumberOfOffers = 5;
 
 const state = {
-  filmName: [
+  filmsName: [
     `Santa claus conquers the martians`,
     `Made for each other`,
     `The dance of life`,
@@ -12,6 +14,16 @@ const state = {
     `Sagebrush trail`,
     `The man with the golden arm`,
   ],
+  originalNames: [
+    `goose trand`,
+    `place kolbeyn`,
+    `calm erl`,
+    `suitable broddi`,
+    `he goat annabella`,
+    `broddi nerun`,
+    `santa karlayl`
+  ],
+
   posters: [
     `popeye-meets-sinbad.png`,
     `santa-claus-conquers-the-martians.jpg`,
@@ -21,86 +33,86 @@ const state = {
     `the-man-with-the-golden-arm.jpg`,
     `made-for-each-other.png`,
   ],
-  genre: [
+  genres: [
     `comedy`,
     `horror`,
     `action`,
     `cartoon`,
   ],
-  ageLimit: [
+  ageLimits: [
     `3+`,
     `13+`,
     `16+`,
     `18+`,
   ],
-  country: [
+  countries: [
     `USA`,
     `Germany`,
     `Valhalla`,
     `Russia`,
   ],
-  comments: {
-    emoji: [
-      `puke.png`,
-      `sleeping.png`,
-      `angry.png`,
-      `smile.png`,
-    ],
-    author: [
-      `Maximilian`,
-      `Vladilen`,
-      `Bill`,
-      `Lex`,
-    ],
-    text: [
-      `good`,
-      `bad`,
-      `good day`,
-      `hello`,
-    ],
+  authors: [
+    `Maximilian`,
+    `Vladilen`,
+    `Bill`,
+    `Lex`,
+  ],
+  writers: [
+    `Anne Wigton`,
+    `Heinz Herald`,
+    `Richard Weil`,
+    `Wigton Heinz`,
+    `Weil Wigton`,
+  ],
+  descriptions: [
+    `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget.`,
+    `Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra.`,
+    `Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.`,
+    `Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.`,
+    `Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.`,
+    `Sed sed nisi sed augue convallis suscipit in sed felis.`,
+    `Aliquam erat volutpat.`,
+    `Nunc fermentum tortor ac porta dapibus.`,
+    `In rutrum ac purus sit amet tempus.`
+  ]
+};
+
+const shuffle = (data) => {
+  for (let i = data.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [data[i], data[j]] = [data[j], data[i]];
   }
 };
 
-const generateArray = (array) => {
-  const randomArray = [];
-  const randomNumberComments = getRandomInteger(1, array.length);
-  for (let j = 0; j < randomNumberComments; j++) {
-    const randomComment = getRandomInteger(0, randomNumberComments - 1);
-    randomArray.push(array[randomComment]);
+const generateRandomSet = (data) => {
+  let newData = [];
+  for (let i = 0; i < getRandomInteger(1, data.length - 1); i++) {
+    newData.push(data[getRandomInteger(0, data.length - 1)]);
   }
-
-  let unique = [...new Set(randomArray)];
-  return unique;
+  shuffle(newData);
+  newData.slice(getRandomInteger(minNumberOfOffers, maxNumberOfOffers));
+  return newData;
 };
 
-const generateDiscription = () => {
-  const description = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
-  const descriptionArray = description.split(`. `);
-  const randomNumberOfSentence = getRandomInteger(0, 4);
-  const result = [];
-  for (let i = 0; i <= randomNumberOfSentence; i++) {
-    const randomSentence = getRandomInteger(0, descriptionArray.length - 1);
-    result.push(descriptionArray[randomSentence]);
+const generateDescription = () => {
+
+  const maxDescriptionLength = 140;
+  const descriptionBlock = document.querySelector(`.film-card__description`);
+
+  shuffle(state.descriptions);
+  const description = state.descriptions.slice(getRandomInteger(minNumberOfOffers, maxNumberOfOffers));
+
+  if (description.length >= maxDescriptionLength) {
+    descriptionBlock.style.textOverflow = `ellipsis`;
   }
-  return result;
+
+  return description.join(``);
 };
 
-
-const generateForCard = (array) => {
+const generaterandomIndex = (array) => {
   const randomIndex = getRandomInteger(0, array.length - 1);
 
   return array[randomIndex];
-};
-
-const generateYear = (day, month, year, format) => {
-  const maxDaysGap = day;
-  const maxMonthGap = month;
-  const maxYearsGap = year;
-  const daysGap = getRandomInteger(-maxDaysGap, 1);
-  const monthGap = getRandomInteger(-maxMonthGap, 1);
-  const yearsGap = getRandomInteger(-maxYearsGap, 0);
-
-  return dayjs().add(daysGap, `day`).add(monthGap, `month`).add(yearsGap, `years`).format(format);
 };
 
 const generateDuration = () => {
@@ -109,28 +121,38 @@ const generateDuration = () => {
   return `${randomHours}h ${randomMin}m`;
 };
 
+const generateComments = () => {
+
+  const createNewComment = () => {
+    return {
+      text: state.descriptions[getRandomInteger(0, state.descriptions.length - 1)],
+      emotion: EMOTIONS[getRandomInteger(0, EMOTIONS.length - 1)],
+      author: state.authors[getRandomInteger(0, state.authors.length - 1)],
+      date: new Date(`${getRandomInteger(2005, 2020)} ${getRandomInteger(0, 11)} ${getRandomInteger(1, 31)} ${getRandomInteger(1, 23)}:${getRandomInteger(1, 59)}`)
+    };
+  };
+
+  return new Array(getRandomInteger(0, maxNumberOfOffers)).fill().map(createNewComment);
+};
+
 export const generateFilmCard = () => {
   return {
-    filmName: generateForCard(state.filmName),
-    poster: generateForCard(state.posters),
-    description: generateDiscription(),
-    raiting: getRandomInteger(0, 5),
-    ageLimit: generateForCard(state.ageLimit),
-    year: generateYear(30, 12, 60, `DD MMMM YYYY`),
+    filmName: generaterandomIndex(state.filmsName),
+    originalName: generaterandomIndex(state.originalNames),
+    poster: generaterandomIndex(state.posters),
+    description: generateDescription(),
+    comments: generateComments(),
+    rating: getRandomInteger(0, 10),
+    ageLimit: generaterandomIndex(state.ageLimits),
+    date: new Date(`${getRandomInteger(1935, 2020)},${getRandomInteger(1, 12)},${getRandomInteger(1, 31)}`),
     duration: generateDuration(),
-    director: generateForCard(state.comments.author),
-    writers: generateArray(state.comments.author),
-    actors: generateArray(state.comments.author),
-    country: generateForCard(state.country),
-    genre: generateArray(state.genre),
+    director: generaterandomIndex(state.authors),
+    writers: generateRandomSet(state.writers),
+    actors: generateRandomSet(state.authors),
+    country: generaterandomIndex(state.countries),
+    genre: generateRandomSet(state.genres),
     watched: Boolean(getRandomInteger(0, 1)),
     watchList: Boolean(getRandomInteger(0, 1)),
-    favorite: Boolean(getRandomInteger(0, 1)),
-    comments: {
-      emoji: generateArray(state.comments.emoji),
-      commentDate: generateYear(30, 12, 5, `YYYY/MM/DD HH:MM`),
-      author: generateArray(state.comments.author),
-      text: generateArray(state.comments.text),
-    },
+    favorite: Boolean(getRandomInteger(0, 1))
   };
 };
