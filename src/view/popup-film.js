@@ -1,12 +1,46 @@
 import dayjs from "dayjs";
-import {EMOTIONS} from '../utils.js';
+
+const emotions = [
+  `smile`,
+  `sleeping`,
+  `puke`,
+  `angry`
+];
+
+const maxLengthDescription = 140;
+const genreOneTitle = document.getElementsByClassName(`genres`);
+
 
 export const createPopupTemplate = (filmCard) => {
   const {filmName, originalName, rating, date, duration, genre, poster, description, comments, director, writers, actors, country, ageLimit} = filmCard;
 
   const genres = genre.map((value, index) => {
+
     return `<span class="film-details__genre">${genre[index]}</span>`;
   }).join(`,`);
+
+  const insertGenre = () => {
+
+    let genreTitle = genreOneTitle.innerHTML = `Genre`;
+
+    if (genre.length >= 2) {
+      genreTitle = genreOneTitle.innerHTML = `Genres`;
+    }
+    return genreTitle;
+  };
+
+  const insertGenreTitle = insertGenre();
+
+  const shorten = (text, maxLength) => {
+    const descriptionText = text;
+    if (descriptionText.length > maxLength) {
+      const cutText = descriptionText.substr(0, maxLength) + ` ...`;
+      return cutText;
+    }
+    return descriptionText;
+  };
+
+  const shortenDescription = shorten(description, maxLengthDescription);
 
   const filmComments = comments.map((value, index) => {
     const {text, author, date: commentDate, emotion} = comments[index];
@@ -26,8 +60,9 @@ export const createPopupTemplate = (filmCard) => {
   </li>`;
   }).join(``);
 
-  const emojiRadio = EMOTIONS.map((value, index) => {
-    const emotion = EMOTIONS[index];
+
+  const emojiRadio = emotions.map((value, index) => {
+    const emotion = emotions[index];
     return `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${emotion}" value="${emotion}">
     <label class="film-details__emoji-label" for="emoji-${emotion}">
       <img src="./images/emoji/${emotion}.png" width="30" height="30" alt="emoji">
@@ -81,13 +116,13 @@ export const createPopupTemplate = (filmCard) => {
               <td class="film-details__cell">${country}</td>
             </tr>
             <tr class="film-details__row">
-              <td class="film-details__term">Genres</td>
+              <td class="film-details__term genres">${insertGenreTitle}</td>
               <td class="film-details__cell">
               ${genres}
             </tr>
           </table>
           <p class="film-details__film-description">
-            ${description}
+            ${shortenDescription}
           </p>
         </div>
       </div>
