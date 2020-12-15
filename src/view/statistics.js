@@ -1,4 +1,6 @@
-export const createStatistics = (rank) => {
+import {createElement} from './../utils';
+
+const createStatistics = (rank) => {
   const {totalWatched, totalTime, userRank} = rank;
   return `<section class="statistic">
   <p class="statistic__rank">
@@ -38,3 +40,27 @@ export const createStatistics = (rank) => {
   </div>
 </section>`;
 };
+
+export default class Statistics {
+  constructor(totalWatched, totalTime, userRank) {
+    this._element = null;
+    this._totalWatched = totalWatched;
+    this._totalTime = totalTime[0];
+    this._userRank = userRank;
+  }
+
+  getTemplate() {
+    return createStatistics(this.user);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

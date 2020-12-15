@@ -1,24 +1,23 @@
-import {createElement} from "../utils";
+import {createElement} from './../utils';
 
-export const createTotalFilmsTemplate = (total) => {
-  return `<p>${total} movies inside</p>`;
+const createFilmsNumber = (filmsNumber) => {
+  return `<p>${filmsNumber} movies inside</p>`;
 };
 
-export class TotalFilms {
-  constructor(total) {
+export default class TotalFilms {
+  constructor(filmsNumber) {
     this._element = null;
-    this._total = total;
+    this._filmsNumber = filmsNumber;
   }
 
   getTemplate() {
-    return createTotalFilmsTemplate(this._total);
+    return createFilmsNumber(this._filmsNumber);
   }
 
   getElement() {
     if (!this._element) {
       this._element = createElement(this.getTemplate());
     }
-
     return this._element;
   }
 

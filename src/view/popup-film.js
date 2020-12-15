@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import {createElement} from './../utils';
 
 const emotions = [
   `smile`,
@@ -11,7 +12,7 @@ const maxLengthDescription = 140;
 const genreOneTitle = document.getElementsByClassName(`genres`);
 
 
-export const createPopupTemplate = (filmCard) => {
+const createPopupTemplate = (filmCard) => {
   const {filmName, originalName, rating, date, duration, genre, poster, description, comments, director, writers, actors, country, ageLimit} = filmCard;
 
   const genres = genre.map((value, index) => {
@@ -151,3 +152,25 @@ export const createPopupTemplate = (filmCard) => {
   </form>
 </section>`;
 };
+
+export default class FilmPopup {
+  constructor(film) {
+    this._element = null;
+    this._film = film;
+  }
+
+  getTemplate() {
+    return createPopupTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

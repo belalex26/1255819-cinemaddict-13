@@ -3,7 +3,7 @@ import {getRandomInteger} from '../utils';
 const minNumberOfOffers = 1;
 const maxNumberOfOffers = 5;
 
-export const state = {
+const state = {
   filmsName: [
     `Santa claus conquers the martians`,
     `Made for each other`,
@@ -99,8 +99,9 @@ const shuffle = (data) => {
 const generateRandomSet = (data) => {
   let newData = [];
   for (let i = 0; i < getRandomInteger(1, data.length - 1); i++) {
-    newData.push(data[getRandomInteger(0, data.length - 1)]);
+    newData.push(data[getRandomInteger(1, data.length - 1)]);
   }
+  newData.filter((item, index) => newData.indexOf(item) === index); // не работает
   shuffle(newData);
   newData.slice(getRandomInteger(minNumberOfOffers, maxNumberOfOffers));
   return newData;
@@ -139,24 +140,47 @@ const generateComments = () => {
   return new Array(getRandomInteger(0, maxNumberOfOffers)).fill().map(createNewComment);
 };
 
-export const generateFilmCard = () => {
-  return {
-    filmName: generateRandomElement(state.filmsName),
-    originalName: generateRandomElement(state.originalNames),
-    poster: generateRandomElement(state.posters),
-    description: generateDescription(),
-    comments: generateComments(),
-    rating: getRandomInteger(0, 10),
-    ageLimit: generateRandomElement(state.ageLimits),
-    date: new Date(`${getRandomInteger(1935, 2020)},${getRandomInteger(1, 12)},${getRandomInteger(0, 30)}`),
-    duration: generateDuration(),
-    director: generateRandomElement(state.authors),
-    writers: generateRandomSet(state.writers),
-    actors: generateRandomSet(state.authors),
-    country: generateRandomElement(state.countries),
-    genre: generateRandomSet(state.genres),
-    watched: Boolean(getRandomInteger(0, 1)),
-    watchList: Boolean(getRandomInteger(0, 1)),
-    favorite: Boolean(getRandomInteger(0, 1))
-  };
-};
+export default class MockFilm {
+  constructor() {
+    this._filmName = generateRandomElement(state.filmsName);
+    this._originalName = generateRandomElement(state.originalNames);
+    this._poster = generateRandomElement(state.posters);
+    this._description = generateDescription();
+    this._comments = generateComments();
+    this._rating = getRandomInteger(0, 10);
+    this._ageLimit = generateRandomElement(state.ageLimits);
+    this._date = new Date(`${getRandomInteger(1935, 2020)},${getRandomInteger(1, 12)},${getRandomInteger(0, 30)}`);
+    this._duration = generateDuration();
+    this._director = generateRandomElement(state.authors);
+    this._writers = generateRandomSet(state.writers);
+    this._actors = generateRandomSet(state.authors);
+    this._country = generateRandomElement(state.countries);
+    this._genre = generateRandomSet(state.genres);
+    this._watched = Boolean(getRandomInteger(0, 1));
+    this._watchList = Boolean(getRandomInteger(0, 1));
+    this._favorite = Boolean(getRandomInteger(0, 1));
+  }
+
+
+  getNewCardFilm() {
+    return {
+      filmName: this._filmName,
+      originalName: this._originalName,
+      poster: this._poster,
+      description: this._description,
+      comments: this._comments,
+      rating: this._rating,
+      ageLimit: this._ageLimit,
+      date: this._date,
+      duration: this._duration,
+      director: this._director,
+      writers: this._writers,
+      actors: this._actors,
+      country: this._country,
+      genre: this._genre,
+      watched: this._watched,
+      watchList: this._watchList,
+      favorite: this._favorite
+    };
+  }
+}
