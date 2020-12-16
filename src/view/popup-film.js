@@ -153,7 +153,7 @@ const createPopupTemplate = (filmCard) => {
 </section>`;
 };
 
-export default class FilmPopup {
+export default class PopupFilm {
   constructor(film) {
     this._element = null;
     this._film = film;

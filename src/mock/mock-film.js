@@ -101,10 +101,10 @@ const generateRandomSet = (data) => {
   for (let i = 0; i < getRandomInteger(1, data.length - 1); i++) {
     newData.push(data[getRandomInteger(1, data.length - 1)]);
   }
-  newData.filter((item, index) => newData.indexOf(item) === index); // не работает
+  // newData.filter((item, index) => newData.indexOf(item) === index); // не работает
   shuffle(newData);
   newData.slice(getRandomInteger(minNumberOfOffers, maxNumberOfOffers));
-  return newData;
+  return Array.from(new Set(newData));
 };
 
 const generateDescription = () => {

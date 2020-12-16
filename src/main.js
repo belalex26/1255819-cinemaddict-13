@@ -1,9 +1,9 @@
 import {render} from './utils';
 import {renderCard} from './render-card';
 
-import UserIcoView from './view/user-icon';
+import UserIconView from './view/user-icon';
 import SiteMenuView from './view/menu-site';
-import SiteSortView from './view/sort';
+import SiteSortView from './view/site-sort';
 import TotalFilmsView from './view/total-films';
 // import StatisticsView from './view/statistics';
 import SiteCatalogView from './view/catalog-films';
@@ -13,7 +13,7 @@ import MostCommentedContainerView from './view/most-commented-container';
 
 
 import UserMock from './mock/user';
-import MockFilm from "./mock/card";
+import MockFilm from "./mock/mock-film";
 
 const FILMS_CARDS_COUNT = 5;
 const FILMS_TOP_RATED_CARDS_NUMBER = 2;
@@ -29,7 +29,7 @@ const filmCards = new Array(MAX_FILMS_CARDS).fill().map(() => {
 });
 const user = new UserMock().userStats;
 
-render(siteHeader, new UserIcoView(user.avatar, user.raiting).getElement());
+render(siteHeader, new UserIconView(user.avatar, user.raiting).getElement());
 render(siteMain, new SiteMenuView(user).getElement(), `afterbein`);
 
 const siteCatalog = new SiteCatalogView();
@@ -71,18 +71,22 @@ const filmsContainer = siteMain.querySelector(`.films`);
 render(filmsContainer, new TopRatingContainerView().getElement());
 render(filmsContainer, new MostCommentedContainerView().getElement());
 
+const filmsCardTopRated = filmCards.slice().sort((previous, current) => {
+  return current.raiting - previous.raiting;
+});
+
+const filmsCardMostCommented = filmCards.slice().sort((previous, current) => {
+  return current.comments.length - previous.comments.length;
+});
+
 const topRatedFilmsContainer = filmsContainer.querySelector(`.films-list--extra .films-list__container`);
 for (let i = 0; i < FILMS_TOP_RATED_CARDS_NUMBER; i++) {
-  renderCard(topRatedFilmsContainer, filmCards.slice().sort((previous, current) => {
-    return current.raiting - previous.raiting;
-  })[i]);
+  renderCard(topRatedFilmsContainer, filmsCardTopRated[i]);
 }
 
 const mostCommentedFilmsContainer = filmsContainer.querySelector(`.films-list--commented .films-list__container`);
 for (let i = 0; i < FILMS_MOST_COMMENTED_CARDS_NUMBER; i++) {
-  renderCard(mostCommentedFilmsContainer, filmCards.slice().sort((previous, current) => {
-    return current.comments.length - previous.comments.length;
-  })[i]);
+  renderCard(mostCommentedFilmsContainer, filmsCardMostCommented[i]);
 }
 
 const siteFooter = document.querySelector(`.footer`);

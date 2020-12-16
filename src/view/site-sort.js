@@ -1,5 +1,5 @@
 
-import {createElement} from './../utils';
+import {createElement} from '../utils';
 
 const createSort = () => {
   return `<ul class="sort">

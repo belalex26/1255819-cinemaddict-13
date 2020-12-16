@@ -12,7 +12,7 @@ const createSiteMenu = (user) => {
 </nav>`;
 };
 
-export default class SiteMenu {
+export default class MenuSite {
   constructor(user) {
     this._element = null;
     this.user = user;

@@ -1,4 +1,4 @@
-import {createElement} from './../utils';
+import {createElement} from '../utils';
 
 const createCardFilm = (cardFilm) => {
   const {filmName, poster, description, date, rating, genre, comments, duration} = cardFilm;

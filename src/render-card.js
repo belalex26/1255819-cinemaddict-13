@@ -1,6 +1,6 @@
 import {render, isKeyPressed} from './utils.js';
 import FilmPopupView from './view/popup-film';
-import FilmCardView from './view/card-film';
+import FilmCardView from './view/film-card';
 
 const pageBody = document.querySelector(`body`);
 
