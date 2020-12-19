@@ -23,6 +23,8 @@ const AVAILABLE_FILMS = `123 456`;
 
 const siteMain = document.querySelector(`.main`);
 const siteHeader = document.querySelector(`.header`);
+const siteFooter = document.querySelector(`.footer`);
+const footerStats = siteFooter.querySelector(`.footer__statistics`);
 
 const filmCards = new Array(MAX_FILMS_CARDS).fill().map(() => {
   return new MockFilm().getNewCardFilm();
@@ -72,7 +74,7 @@ render(filmsContainer, new TopRatingContainerView().getElement());
 render(filmsContainer, new MostCommentedContainerView().getElement());
 
 const filmsCardTopRated = filmCards.slice().sort((previous, current) => {
-  return current.raiting - previous.raiting;
+  return current.rating - previous.rating;
 });
 
 const filmsCardMostCommented = filmCards.slice().sort((previous, current) => {
@@ -80,16 +82,10 @@ const filmsCardMostCommented = filmCards.slice().sort((previous, current) => {
 });
 
 const topRatedFilmsContainer = filmsContainer.querySelector(`.films-list--extra .films-list__container`);
-for (let i = 0; i < FILMS_TOP_RATED_CARDS_NUMBER; i++) {
-  renderCard(topRatedFilmsContainer, filmsCardTopRated[i]);
-}
+filmsCardTopRated.slice(0, FILMS_TOP_RATED_CARDS_NUMBER).forEach((film) => renderCard(topRatedFilmsContainer, film));
+
 
 const mostCommentedFilmsContainer = filmsContainer.querySelector(`.films-list--commented .films-list__container`);
-for (let i = 0; i < FILMS_MOST_COMMENTED_CARDS_NUMBER; i++) {
-  renderCard(mostCommentedFilmsContainer, filmsCardMostCommented[i]);
-}
-
-const siteFooter = document.querySelector(`.footer`);
-const footerStats = siteFooter.querySelector(`.footer__statistics`);
+filmsCardMostCommented.slice(0, FILMS_MOST_COMMENTED_CARDS_NUMBER).forEach((film) => renderCard(mostCommentedFilmsContainer, film));
 
 render(footerStats, new TotalFilmsView(AVAILABLE_FILMS).getElement());
