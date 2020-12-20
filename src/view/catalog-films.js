@@ -1,22 +1,31 @@
-import {createCardFilm} from "./card-film";
-import {getRandomInteger} from '../utils';
 
-const createCardsForRecommend = (count, filmCard) => {
-  const result = ``;
-  for (let x = 0; x < count; x++) {
-    const randomFilmCard = getRandomInteger(0, filmCard.length - 1);
-    result += createCardFilm(filmCard[randomFilmCard]);
-  }
-  return result;
-};
+import {createElement} from './../utils';
 
-
-export const createCatalogFilms = (count, filmCard, title) => {
+const createFilmsCatalog = () => {
   return `<section class="films">
   <section class="films-list">
-    <h2 class="films-list__title visually-hidden">${title}</h2>
-    <div class="films-list__container">
-      ${createCardsForRecommend(count, filmCard)}
-    </div>
+    <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
+    <div class="films-list__container"></div>
   </section>`;
 };
+
+export default class SiteCatalog {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmsCatalog();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
