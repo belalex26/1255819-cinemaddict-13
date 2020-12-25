@@ -16,7 +16,7 @@ import MockFilm from "./mock/mock-film";
 const FILMS_CARDS_COUNT = 5;
 const FILMS_TOP_RATED_CARDS_NUMBER = 2;
 const FILMS_MOST_COMMENTED_CARDS_NUMBER = 2;
-const MAX_FILMS_CARDS = 20;
+const MAX_FILMS_CARDS = 0;
 const AVAILABLE_FILMS = `123 456`;
 
 const siteMain = document.querySelector(`.main`);
@@ -52,7 +52,6 @@ const renderTheWholeCatalog = () => {
     render(filmsListContainer, `<h2 class="films-list__title">There are no movies in our database</h2>`);
   }
 
-
   if (filmCards.length > FILMS_CARDS_COUNT) {
     let renderedFilmCount = FILMS_CARDS_COUNT;
     render(filmsListContainer, new ShowMoreButtonView().getElement(), `afterend`);
@@ -70,28 +69,27 @@ const renderTheWholeCatalog = () => {
       }
     });
   }
+  const filmsContainer = siteMain.querySelector(`.films`);
+
+  render(filmsContainer, new TopRatingContainerView().getElement());
+  render(filmsContainer, new MostCommentedContainerView().getElement());
+
+  const filmsCardTopRated = filmCards.slice().sort((previous, current) => {
+    return current.rating - previous.rating;
+  });
+
+  const filmsCardMostCommented = filmCards.slice().sort((previous, current) => {
+    return current.comments.length - previous.comments.length;
+  });
+
+  const topRatedFilmsContainer = filmsContainer.querySelector(`.films-list--extra .films-list__container`);
+  filmsCardTopRated.slice(0, FILMS_TOP_RATED_CARDS_NUMBER).forEach((film) => renderCard(topRatedFilmsContainer, film));
+
+
+  const mostCommentedFilmsContainer = filmsContainer.querySelector(`.films-list--commented .films-list__container`);
+  filmsCardMostCommented.slice(0, FILMS_MOST_COMMENTED_CARDS_NUMBER).forEach((film) => renderCard(mostCommentedFilmsContainer, film));
 };
 
 renderTheWholeCatalog();
-
-const filmsContainer = siteMain.querySelector(`.films`);
-
-render(filmsContainer, new TopRatingContainerView().getElement());
-render(filmsContainer, new MostCommentedContainerView().getElement());
-
-const filmsCardTopRated = filmCards.slice().sort((previous, current) => {
-  return current.rating - previous.rating;
-});
-
-const filmsCardMostCommented = filmCards.slice().sort((previous, current) => {
-  return current.comments.length - previous.comments.length;
-});
-
-const topRatedFilmsContainer = filmsContainer.querySelector(`.films-list--extra .films-list__container`);
-filmsCardTopRated.slice(0, FILMS_TOP_RATED_CARDS_NUMBER).forEach((film) => renderCard(topRatedFilmsContainer, film));
-
-
-const mostCommentedFilmsContainer = filmsContainer.querySelector(`.films-list--commented .films-list__container`);
-filmsCardMostCommented.slice(0, FILMS_MOST_COMMENTED_CARDS_NUMBER).forEach((film) => renderCard(mostCommentedFilmsContainer, film));
 
 render(footerStats, new TotalFilmsView(AVAILABLE_FILMS).getElement());
