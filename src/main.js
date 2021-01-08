@@ -42,10 +42,11 @@ const renderTheWholeCatalog = () => {
     return;
   }
 
-  render(siteMain, new SiteSortView().getElement());
+  render(siteMain, new SiteSortView());
   render(siteMain, containerFilms);
 
   const filmsListContainer = siteMain.querySelector(`.films-list__container`);
+
   if (filmCards.length !== 0) {
     filmCards.slice(0, FILMS_CARDS_COUNT).forEach((film) => renderCard(filmsListContainer, film));
   } else {
@@ -54,25 +55,26 @@ const renderTheWholeCatalog = () => {
 
   if (filmCards.length > FILMS_CARDS_COUNT) {
     let renderedFilmCount = FILMS_CARDS_COUNT;
-    render(filmsListContainer, new ShowMoreButtonView().getElement(), `afterend`);
 
-    const loadMoreButton = siteMain.querySelector(`.films-list__show-more`);
+    const loadMoreButton = new ShowMoreButtonView();
+    render(filmsListContainer, loadMoreButton, `afterend`);
 
-    loadMoreButton.addEventListener(`click`, (evt) => {
-      evt.preventDefault();
+
+    const onShowMoreButtonClick = () => {
       filmCards.slice(renderedFilmCount, renderedFilmCount + FILMS_CARDS_COUNT).forEach((film) => renderCard(filmsListContainer, film));
-
       renderedFilmCount += FILMS_CARDS_COUNT;
 
       if (renderedFilmCount >= filmCards.length) {
-        loadMoreButton.remove();
+        loadMoreButton.getElement().remove();
       }
-    });
+    };
+    loadMoreButton.setClickHandler(onShowMoreButtonClick);
   }
   const filmsContainer = siteMain.querySelector(`.films`);
 
-  render(filmsContainer, new TopRatingContainerView().getElement());
-  render(filmsContainer, new MostCommentedContainerView().getElement());
+
+  render(filmsContainer, new TopRatingContainerView());
+  render(filmsContainer, new MostCommentedContainerView());
 
   const filmsCardTopRated = filmCards.slice().sort((previous, current) => {
     return current.rating - previous.rating;
@@ -92,4 +94,4 @@ const renderTheWholeCatalog = () => {
 
 renderTheWholeCatalog();
 
-render(footerStats, new TotalFilmsView(AVAILABLE_FILMS).getElement());
+render(footerStats, new TotalFilmsView(AVAILABLE_FILMS));

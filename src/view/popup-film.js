@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import {createElement} from './../utils';
+import AbstractView from './abstract-view';
 
 const emotions = [
   `smile`,
@@ -153,24 +153,24 @@ const createPopupTemplate = (filmCard) => {
 </section>`;
 };
 
-export default class PopupFilm {
+export default class PopupFilm extends AbstractView {
   constructor(film) {
-    this._element = null;
+    super();
     this._film = film;
+    this._crossClickHandler = this._crossClickHandler.bind(this);
   }
 
   getTemplate() {
     return createPopupTemplate(this._film);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
+  _crossClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.crossClick(evt);
   }
 
-  removeElement() {
-    this._element = null;
+  setCrossClickHandler(cb) {
+    this._callback.crossClick = cb;
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._crossClickHandler);
   }
 }

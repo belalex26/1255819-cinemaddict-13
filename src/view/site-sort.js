@@ -1,5 +1,4 @@
-
-import {createElement} from '../utils';
+import AbstractView from './abstract-view';
 
 const createSort = () => {
   return `<ul class="sort">
@@ -9,23 +8,9 @@ const createSort = () => {
 </ul>`;
 };
 
-export default class SiteSort {
-  constructor() {
-    this._element = null;
-  }
+export default class SiteSort extends AbstractView {
 
   getTemplate() {
     return createSort();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
