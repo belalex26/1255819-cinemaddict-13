@@ -1,4 +1,4 @@
-import {createElement} from './../utils';
+import AbstractView from './abstract-view';
 
 const createStatistics = (rank) => {
   const {totalWatched, totalTime, userRank} = rank;
@@ -41,9 +41,9 @@ const createStatistics = (rank) => {
 </section>`;
 };
 
-export default class Statistics {
+export default class Statistics extends AbstractView {
   constructor(totalWatched, totalTime, userRank) {
-    this._element = null;
+    super();
     this._totalWatched = totalWatched;
     this._totalTime = totalTime[0];
     this._userRank = userRank;
@@ -51,16 +51,5 @@ export default class Statistics {
 
   getTemplate() {
     return createStatistics(this.user);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
