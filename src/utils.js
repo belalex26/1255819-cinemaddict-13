@@ -44,3 +44,16 @@ export const isKeyPressed = (evt, cb, keyName) => {
     cb();
   }
 };
+
+export const remove = (component) => {
+  if (component === null) {
+    return;
+  }
+
+  if (!(component instanceof AbstractView)) {
+    throw new Error(`Can remove only components`);
+  }
+
+  component.getElement().remove();
+  component.removeElement();
+};
