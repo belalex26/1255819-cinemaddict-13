@@ -25,4 +25,4 @@ render(siteHeader, new UserIconView(user.avatar, user.raiting).getElement());
 const movieList = new MovieList();
 movieList.init(filmCards);
 
-render(footerStats, new TotalFilmsView(AVAILABLE_FILMS));
+render(footerStats, new TotalFilmsView(AVAILABLE_FILMS), `beforeend`);

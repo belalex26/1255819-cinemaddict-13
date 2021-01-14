@@ -57,3 +57,26 @@ export const remove = (component) => {
   component.getElement().remove();
   component.removeElement();
 };
+
+export const updateUserPropertyArray = (idArr, filmId) => {
+  const index = idArr.findIndex((id) => id === filmId);
+
+  if (index === -1) {
+    idArr.push(filmId);
+    return idArr;
+  }
+
+  idArr.splice(index, 1);
+  return idArr;
+};
+
+export const updateElement = (elementsArr, elementToUpdate) => {
+  const index = elementsArr.findIndex((element) => element.id === elementToUpdate.id);
+  if (index === -1) {
+    return elementsArr;
+  }
+
+  return [
+    ...elementsArr.slice(0, index), elementToUpdate, ...elementsArr.slice(index + 1)
+  ];
+};

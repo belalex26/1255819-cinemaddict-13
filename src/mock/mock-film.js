@@ -82,6 +82,8 @@ const state = {
   ]
 };
 
+const generateId = () => Date.now() + parseInt(Math.random() * 10000, 10);
+
 const generateDate = () => {
   const date = new Date(`${getRandomInteger(2005, 2020)} ${getRandomInteger(1, 12)} ${getRandomInteger(1, 31)} ${getRandomInteger(1, 23)}:${getRandomInteger(1, 59)}`);
   return date;
@@ -101,7 +103,7 @@ const generateRandomSet = (data) => {
   for (let i = 0; i < getRandomInteger(1, data.length - 1); i++) {
     newData.push(data[getRandomInteger(1, data.length - 1)]);
   }
-  // newData.filter((item, index) => newData.indexOf(item) === index); // не работает
+
   shuffle(newData);
   newData.slice(getRandomInteger(minNumberOfOffers, maxNumberOfOffers));
   return Array.from(new Set(newData));
@@ -142,6 +144,7 @@ const generateComments = () => {
 
 export default class MockFilm {
   constructor() {
+    this._id = generateId();
     this._filmName = generateRandomElement(state.filmsName);
     this._originalName = generateRandomElement(state.originalNames);
     this._poster = generateRandomElement(state.posters);
@@ -159,11 +162,16 @@ export default class MockFilm {
     this._watched = Boolean(getRandomInteger(0, 1));
     this._watchList = Boolean(getRandomInteger(0, 1));
     this._favorite = Boolean(getRandomInteger(0, 1));
+
+    this._isInWatchlist = Boolean(getRandomInteger(0, 1));
+    this._isInHistory = Boolean(getRandomInteger(0, 1));
+    this._isFavourite = Boolean(getRandomInteger(0, 1));
   }
 
 
   getNewCardFilm() {
     return {
+      id: this._id,
       filmName: this._filmName,
       originalName: this._originalName,
       poster: this._poster,
@@ -178,9 +186,9 @@ export default class MockFilm {
       actors: this._actors,
       country: this._country,
       genre: this._genre,
-      watched: this._watched,
-      watchList: this._watchList,
-      favorite: this._favorite
+      isInWatchlist: this._isInWatchlist,
+      isInHistory: this._isInHistory,
+      isFavourite: this._isFavourite
     };
   }
 }
