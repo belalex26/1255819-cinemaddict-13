@@ -57,12 +57,12 @@ export default class Movie {
     }
   }
 
-  closePopup() {
-    this._onClosePopup();
-  }
-
   _onPopupEscPress(evt) {
     isKeyPressed(evt, this._onClosePopup, `Escape`);
+  }
+
+  closePopup() {
+    this._onClosePopup();
   }
 
   _handlerFavoriteClick() {
