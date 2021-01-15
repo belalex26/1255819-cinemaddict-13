@@ -1,4 +1,4 @@
-import {render, remove} from '../utils';
+import {render, remove, updateElement} from '../utils';
 // import {renderCard} from '../render-card';
 
 import SiteSortView from '../view/site-sort';
@@ -25,6 +25,8 @@ export default class MovieList {
     this._mostCommentedFilmsContainer = new MostCommentedContainerView();
 
     this._closeAllPopups = this._closeAllPopups.bind(this);
+    this._hadleFilmChange = this._hadleFilmChange.bind(this);
+    this._setDefaultView = this._setDefaultView.bind(this);
 
     this._moviePresenter = {
       catalog: {},
@@ -49,6 +51,19 @@ export default class MovieList {
     }
   }
 
+  _hadleFilmChange(updateFilm) {
+    this._filmCards = updateElement(this._filmCards, updateFilm);
+    if (this._moviePresenter[updateFilm.id]) {
+      this._moviePresenter[updateFilm.id].init(updateFilm);
+    }
+  }
+
+  _setDefaultView() {
+    Object.values(this._moviePresenter).forEach((presenter) => {
+      presenter.closePopup();
+    });
+  }
+
   _clearMovieList() {
     Object
       .value(this._movieListPresenter)
@@ -70,7 +85,7 @@ export default class MovieList {
 
   _renderCard(film, container, block) {
 
-    const moviePresenter = new MoviePresenter(this._closeAllPopups);
+    const moviePresenter = new MoviePresenter(this._hadleFilmChange, this._setDefaultView, this._closeAllPopups);
     moviePresenter.init(film, container);
 
     switch (block) {

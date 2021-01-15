@@ -69,9 +69,9 @@ export default class Movie {
     this._changeData(
         Object.assign(
             {},
-            this._film,
+            this._card,
             {
-              favorite: !this._film.favorite
+              favorite: !this._card.favorite
             }
         )
     );
@@ -82,9 +82,9 @@ export default class Movie {
     this._changeData(
         Object.assign(
             {},
-            this._film,
+            this._card,
             {
-              watchList: !this._film.watchList
+              watchList: !this._card.watchList
             }
         )
     );
@@ -94,9 +94,9 @@ export default class Movie {
     this._changeData(
         Object.assign(
             {},
-            this._film,
+            this._card,
             {
-              watched: !this._film.watched
+              watched: !this._card.watched
             }
         )
     );
