@@ -1,119 +1,104 @@
-import {render, remove, isKeyPressed, updateUserPropertyArray} from '../utils.js';
+import {render, remove, isKeyPressed} from '../utils.js';
 import FilmPopupView from '../view/popup-film';
 import FilmCardView from '../view/film-card';
 
 const pageBody = document.querySelector(`body`);
-let popup;
 
 export default class Movie {
-  constructor(filmChangeCb, userChangeCb, closePopupsCb) {
-    this._card = null;
-    this._popup = null;
-    this._pageBody = document.querySelector(`body`);
-    this._filmChange = filmChangeCb;
-    this._userChange = userChangeCb;
-    this._closePopups = closePopupsCb;
-
-    this._closePopup = this._closePopup.bind(this);
-    this._openPopup = this._openPopup.bind(this);
-
-    this._onCardPosterClick = this._onCardPosterClick.bind(this);
-    this._onCardTitleClick = this._onCardTitleClick.bind(this);
-    this._onCardCommentsClick = this._onCardCommentsClick.bind(this);
+  constructor(changeData, viewChange) {
+    this._changeData = changeData;
+    this._viewChange = viewChange;
+    this._onOpenPopup = this._onOpenPopup.bind(this);
+    this._onClosePopup = this._onClosePopup.bind(this);
     this._onPopupEscPress = this._onPopupEscPress.bind(this);
-    this._onPopupCrossClick = this._onPopupCrossClick.bind(this);
-    this._onCardWatchlistClick = this._onCardWatchlistClick.bind(this);
-    this._onCardToHistoryClick = this._onCardToHistoryClick.bind(this);
-    this._onCardFavouritesClick = this._onCardFavouritesClick.bind(this);
+    this._card = null;
+
+    this._handlerFavoriteClick = this._handlerFavoriteClick.bind(this);
+    this._handlerWatchlistClick = this._handlerWatchlistClick.bind(this);
+    this._handlerWatchedlistClick = this._handlerWatchedlistClick.bind(this);
 
   }
   destroy() {
     remove(this._card);
   }
 
-  init(container, film) {
-    this._card = film;
-    this._renderCard(container, film);
-    // this._setEventListeners();
+  init(container, filmCard) {
+    this._filmCard = filmCard;
+
+    this._card = new FilmCardView(this._filmCard);
+    render(container, this._card);
+
+    this._card.setClickPopupHandler(this._onOpenPopup);
+    this._card.setWatchedlistClickHandler(this._handlerWatchedlistClick);
+    this._card.setWatchlistClickHandler(this._handlerWatchlistClick);
+    this._card.setFavoriteClickHandler(this._handlerFavoriteClick);
   }
 
-  _closePopup() {
+  _onOpenPopup() {
+    // this._viewChange();
+    this._popup = new FilmPopupView(this._filmCard);
+
+    pageBody.classList.add(`hide-overflow`);
+    pageBody.appendChild(this._popup.getElement());
+    this._popup.setCloseClickHandler(this._onClosePopup);
+    this._card.setWatchedlistClickHandler(this._handlerWatchedlistClick);
+    this._card.setWatchlistClickHandler(this._handlerWatchlistClick);
+    this._card.setFavoriteClickHandler(this._handlerFavoriteClick);
+    document.addEventListener(`keydown`, this._onPopupEscPress);
+  }
+
+  _onClosePopup() {
     if (this._popup) {
-      popup.getElement().remove();
-      document.removeEventListener(`keyup`, this._onPopupEscPress);
       pageBody.classList.remove(`hide-overflow`);
+      pageBody.removeChild(this._popup.getElement());
+      document.removeEventListener(`keydown`, this._onPopupEscPress);
+      this._card.setClickPopupHandler(this._onOpenPopup);
+      this._popup = null;
     }
   }
 
-  _openPopup(evt) {
-    evt.preventDefault();
-    this._closePopups();
-    this._popup = new FilmPopupView(this._card);
-    render(pageBody, this._popup);
-    popup.setCrossClickHandler(this._onPopupCrossClick);
-    document.addEventListener(`keyup`, this._onPopupEscPress);
-    pageBody.classList.add(`hide-overflow`);
-  }
-
-  _onCardWatchlistClick() {
-    this._userChange(`watchlist`, updateUserPropertyArray(this._user.watchlist, this._film.id), this._film);
-  }
-
-  _onCardFavouritesClick() {
-    this._filmChange(Object.assign(
-        {},
-        this._film,
-        {
-          isFavourite: !this._film.isFavourite
-        }
-    ));
-    this._userChange(`favourites`, updateUserPropertyArray(this._user.favourites, this._film.id), this._film);
-  }
-
-  _onCardToHistoryClick() {
-    this._filmChange(Object.assign(
-        {},
-        this._film,
-        {
-          isInHistory: !this._film.isInHistory
-        }
-    ));
-    this._userChange(`history`, updateUserPropertyArray(this._user.history, this._film.id), this._film);
-  }
-
-  _onCardPosterClick(evt) {
-    this._openPopup(evt);
-  }
-
-  _onCardTitleClick(evt) {
-    this._openPopup(evt);
-  }
-
-  _onCardCommentsClick(evt) {
-    this._openPopup(evt);
+  closePopup() {
+    this._onClosePopup();
   }
 
   _onPopupEscPress(evt) {
-    isKeyPressed(evt, this._closePopup, `Escape`);
+    isKeyPressed(evt, this._onClosePopup, `Escape`);
   }
 
-  _onPopupCrossClick() {
-    this._closePopup();
+  _handlerFavoriteClick() {
+    this._changeData(
+        Object.assign(
+            {},
+            this._film,
+            {
+              favorite: !this._film.favorite
+            }
+        )
+    );
+
   }
 
-  _setEventListeners() { // если добавить вызов, появляется ошибка
-    this._card.setPosterClickHandler(this._onCardPosterClick);
-    this._card.setTitleClickHandler(this._onCardTitleClick);
-    this._card.setCommentsClickHandler(this._onCardCommentsClick);
-    this._card.setToWatchListButtonClickHandler(this._onCardWatchlistClick);
-    this._card.setWatchedButtonClickHandler(this._onCardToHistoryClick);
-    this._card.setToFavouritesButtonClickHandler(this._onCardFavouritesClick);
+  _handlerWatchlistClick() {
+    this._changeData(
+        Object.assign(
+            {},
+            this._film,
+            {
+              watchList: !this._film.watchList
+            }
+        )
+    );
   }
 
-  _renderCard(container) {
-    const card = new FilmCardView(this._card);
-    render(container, card);
+  _handlerWatchedlistClick() {
+    this._changeData(
+        Object.assign(
+            {},
+            this._film,
+            {
+              watched: !this._film.watched
+            }
+        )
+    );
   }
 }
-
-
