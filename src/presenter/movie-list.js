@@ -24,13 +24,15 @@ export default class MovieList {
     this._topRatedFilmsContainer = new TopRatingContainerView();
     this._mostCommentedFilmsContainer = new MostCommentedContainerView();
 
+    this._closeAllPopups = this._closeAllPopups.bind(this);
+
     this._moviePresenter = {
       catalog: {},
       raited: {},
       commented: {}
     };
-
   }
+
   init(filmCards) {
     this._presenterBlocks = Object.keys(this._moviePresenter);
     this._filmCards = filmCards;
@@ -56,8 +58,10 @@ export default class MovieList {
     remove(this._loadMoreButton);
   }
 
-  _closeAllPopups(film) {
-    this._presenterBlocks(film).forEach(() => film.closePopup());
+  _closeAllPopups() {
+    for (let i = 0; i < this._presenterBlocks.length; i++) {
+      Object.values(this._filmCardPresenter[this._presenterBlocks[i]]).forEach((presenter) => presenter.closePopup());
+    }
   }
 
   _renderNoFims(filmsListContainer) {
@@ -66,7 +70,7 @@ export default class MovieList {
 
   _renderCard(film, container, block) {
 
-    const moviePresenter = new MoviePresenter();
+    const moviePresenter = new MoviePresenter(this._closeAllPopups);
     moviePresenter.init(film, container);
 
     switch (block) {
