@@ -24,8 +24,7 @@ export default class MovieList {
     this._topRatedFilmsContainer = new TopRatingContainerView();
     this._mostCommentedFilmsContainer = new MostCommentedContainerView();
 
-    this._closeAllPopups = this._closeAllPopups.bind(this);
-    this._hadleFilmChange = this._hadleFilmChange.bind(this);
+    this._handleFilmChange = this._handleFilmChange.bind(this);
     this._setDefaultView = this._setDefaultView.bind(this);
 
     this._moviePresenter = {
@@ -46,12 +45,12 @@ export default class MovieList {
   _updatePresenters(film) {
     for (let i = 0; i < this._presenterBlocks.length; i++) {
       if (this._moviePresenter[this._presenterBlocks[i]][film.id]) {
-        this._moviePresenterr[this._presenterBlocks[i]][film.id].init(film);
+        this._moviePresenter[this._presenterBlocks[i]][film.id].init(film);
       }
     }
   }
 
-  _hadleFilmChange(updateFilm) {
+  _handleFilmChange(updateFilm) {
     this._filmCards = updateElement(this._filmCards, updateFilm);
     if (this._moviePresenter[updateFilm.id]) {
       this._moviePresenter[updateFilm.id].init(updateFilm);
@@ -73,31 +72,14 @@ export default class MovieList {
     remove(this._loadMoreButton);
   }
 
-  _closeAllPopups() {
-    for (let i = 0; i < this._presenterBlocks.length; i++) {
-      Object.values(this._filmCardPresenter[this._presenterBlocks[i]]).forEach((presenter) => presenter.closePopup());
-    }
-  }
-
   _renderNoFims(filmsListContainer) {
     render(filmsListContainer, `<h2 class="films-list__title">There are no movies in our database</h2>`);
   }
 
   _renderCard(film, container, block) {
-
-    const moviePresenter = new MoviePresenter(this._hadleFilmChange, this._setDefaultView, this._closeAllPopups);
-    moviePresenter.init(film, container);
-
-    switch (block) {
-      case `raited`:
-        this._moviePresenter.raited[film.id] = moviePresenter;
-        break;
-      case `commented`:
-        this._moviePresenter.commented[film.id] = moviePresenter;
-        break;
-      default:
-        this._moviePresenter.catalog[film.id] = moviePresenter;
-    }
+    const renderMoviePresenter = new MoviePresenter(this._handleFilmChange, this._setDefaultView, block);
+    renderMoviePresenter.init(film, container);
+    this._moviePresenter[film.id] = renderMoviePresenter;
   }
 
   _renderSort() {
@@ -129,7 +111,7 @@ export default class MovieList {
     loadMoreButton.setClickHandler(onShowMoreButtonClick);
   }
 
-  _renderfilmsCardTopRated(filmsContainer) {
+  _renderFilmsCardTopRated(filmsContainer) {
     render(filmsContainer, new TopRatingContainerView());
 
     const filmsCardTopRated = this._filmCards.slice().sort((previous, current) => {
@@ -176,7 +158,7 @@ export default class MovieList {
 
     const filmsContainer = this._siteMain.querySelector(`.films`);
 
-    this._renderfilmsCardTopRated(filmsContainer);
+    this._renderFilmsCardTopRated(filmsContainer);
     this._renderFilmsCardMostCommented(filmsContainer);
   }
 }

@@ -159,8 +159,8 @@ export default class PopupFilm extends AbstractView {
     this._film = film;
     this._closeClickHandler = this._closeClickHandler.bind(this);
 
-    this._onWatchedlistClick = this._onWatchedlistClick.bind(this);
-    this._onWatchlistClick = this._onWatchlistClick.bind(this);
+    this._onWatchedListClick = this._onWatchedListClick.bind(this);
+    this._onWatchListClick = this._onWatchListClick.bind(this);
     this._onFavoriteClick = this._onFavoriteClick.bind(this);
   }
 
@@ -172,6 +172,7 @@ export default class PopupFilm extends AbstractView {
     evt.preventDefault();
     this._callback.closeClick();
   }
+
   setCloseClickHandler(callback) {
     this._callback.closeClick = callback;
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._closeClickHandler);
@@ -188,23 +189,23 @@ export default class PopupFilm extends AbstractView {
 
   }
 
-  setWatchlistClickHandler(callback) {
-    this._callback.watchlistClick = callback;
-    this.getElement().querySelector(`input[name="watchlist"]`).addEventListener(`change`, this._onWatchlistClick);
+  setWatchListClickHandler(callback) {
+    this._callback.watchListClick = callback;
+    this.getElement().querySelector(`input[name="watchlist"]`).addEventListener(`change`, this._onWatchListClick);
   }
 
-  _onWatchlistClick(evt) {
+  _onWatchListClick(evt) {
     evt.preventDefault();
-    this._callback.watchlistClick();
+    this._callback.watchListClick();
   }
 
-  setWatchedlistClickHandler(callback) {
-    this._callback.watchedlistClick = callback;
-    this.getElement().querySelector(`input[name="watched"`).addEventListener(`change`, this._onWatchedlistClick);
+  setWatchedListClickHandler(callback) {
+    this._callback.watchedListClick = callback;
+    this.getElement().querySelector(`input[name="watched"`).addEventListener(`change`, this._onWatchedListClick);
   }
 
-  _onWatchedlistClick(evt) {
+  _onWatchedListClick(evt) {
     evt.preventDefault();
-    this._callback.watchedlistClick();
+    this._callback.watchedListClick();
   }
 }

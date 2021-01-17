@@ -14,8 +14,8 @@ export default class Movie {
     this._card = null;
 
     this._handlerFavoriteClick = this._handlerFavoriteClick.bind(this);
-    this._handlerWatchlistClick = this._handlerWatchlistClick.bind(this);
-    this._handlerWatchedlistClick = this._handlerWatchedlistClick.bind(this);
+    this._handlerWatchListClick = this._handlerWatchListClick.bind(this);
+    this._handlerWatchedListClick = this._handlerWatchedListClick.bind(this);
 
   }
   destroy() {
@@ -29,20 +29,20 @@ export default class Movie {
     render(container, this._card);
 
     this._card.setClickPopupHandler(this._onOpenPopup);
-    this._card.setWatchedlistClickHandler(this._handlerWatchedlistClick);
-    this._card.setWatchlistClickHandler(this._handlerWatchlistClick);
+
+    this._card.setWatchedListClickHandler(this._handlerWatchedListClick);
+    this._card.setWatchListClickHandler(this._handlerWatchListClick);
     this._card.setFavoriteClickHandler(this._handlerFavoriteClick);
   }
 
   _onOpenPopup() {
-    // this._viewChange();
     this._popup = new FilmPopupView(this._filmCard);
 
     pageBody.classList.add(`hide-overflow`);
     pageBody.appendChild(this._popup.getElement());
     this._popup.setCloseClickHandler(this._onClosePopup);
-    this._card.setWatchedlistClickHandler(this._handlerWatchedlistClick);
-    this._card.setWatchlistClickHandler(this._handlerWatchlistClick);
+    this._card.setWatchedListClickHandler(this._handlerWatchedListClick);
+    this._card.setWatchListClickHandler(this._handlerWatchListClick);
     this._card.setFavoriteClickHandler(this._handlerFavoriteClick);
     document.addEventListener(`keydown`, this._onPopupEscPress);
   }
@@ -69,34 +69,33 @@ export default class Movie {
     this._changeData(
         Object.assign(
             {},
-            this._card,
+            this._filmCard,
             {
-              favorite: !this._card.favorite
-            }
-        )
-    );
-
-  }
-
-  _handlerWatchlistClick() {
-    this._changeData(
-        Object.assign(
-            {},
-            this._card,
-            {
-              watchList: !this._card.watchList
+              favorite: !this._filmCard.favorite
             }
         )
     );
   }
 
-  _handlerWatchedlistClick() {
+  _handlerWatchListClick() {
     this._changeData(
         Object.assign(
             {},
-            this._card,
+            this._filmCard,
             {
-              watched: !this._card.watched
+              watchList: !this._filmCard.watchList
+            }
+        )
+    );
+  }
+
+  _handlerWatchedListClick() {
+    this._changeData(
+        Object.assign(
+            {},
+            this._filmCard,
+            {
+              watched: !this._filmCard.watched
             }
         )
     );
