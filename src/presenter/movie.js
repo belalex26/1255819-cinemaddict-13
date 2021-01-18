@@ -1,6 +1,7 @@
 import {render, remove, isKeyPressed} from '../utils.js';
 import FilmPopupView from '../view/popup-film';
 import FilmCardView from '../view/film-card';
+import categories from '../view/popup-film';
 
 const pageBody = document.querySelector(`body`);
 
@@ -16,6 +17,7 @@ export default class Movie {
     this._handlerFavoriteClick = this._handlerFavoriteClick.bind(this);
     this._handlerWatchListClick = this._handlerWatchListClick.bind(this);
     this._handlerWatchedListClick = this._handlerWatchedListClick.bind(this);
+    this.cardUpdateHandler = this.cardUpdateHandler.bind(this);
 
   }
 
@@ -55,6 +57,20 @@ export default class Movie {
       document.removeEventListener(`keydown`, this._onPopupEscPress);
       this._card.setClickPopupHandler(this._onOpenPopup);
       this._popup = null;
+    }
+  }
+
+  cardUpdateHandler(category) {
+    switch (category) {
+      case categories.WATCHLIST:
+        this._onCardWatchlistClick();
+        break;
+      case categories.HISTORY:
+        this._onCardToHistoryClick();
+        break;
+      case categories.FAVOURITES:
+        this._onCardFavouritesClick();
+        break;
     }
   }
 
