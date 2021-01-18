@@ -18,9 +18,6 @@ export default class Movie {
     this._handlerWatchedListClick = this._handlerWatchedListClick.bind(this);
 
   }
-  destroy() {
-    remove(this._card);
-  }
 
   init(container, filmCard) {
     this._filmCard = filmCard;
@@ -33,6 +30,10 @@ export default class Movie {
     this._card.setWatchedListClickHandler(this._handlerWatchedListClick);
     this._card.setWatchListClickHandler(this._handlerWatchListClick);
     this._card.setFavoriteClickHandler(this._handlerFavoriteClick);
+  }
+
+  destroy() {
+    remove(this._card);
   }
 
   _onOpenPopup() {
