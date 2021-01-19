@@ -1,5 +1,11 @@
 import AbstractView from './view/abstract-view';
 
+export const sortType = {
+  DEFAULT: `default`,
+  DATE: `date`,
+  RATING: `raiting`,
+};
+
 export const getRandomInteger = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -43,4 +49,40 @@ export const isKeyPressed = (evt, cb, keyName) => {
   if (evt.key === keyName) {
     cb();
   }
+};
+
+export const remove = (component) => {
+  if (component === null) {
+    return;
+  }
+
+  if (!(component instanceof AbstractView)) {
+    throw new Error(`Can remove only components`);
+  }
+
+  component.getElement().remove();
+  component.removeElement();
+};
+
+export const updateUserPropertyArray = (idArr, filmId) => {
+  const index = idArr.findIndex((id) => id === filmId);
+
+  if (index === -1) {
+    idArr.push(filmId);
+    return idArr;
+  }
+
+  idArr.splice(index, 1);
+  return idArr;
+};
+
+export const updateElement = (elementsArr, elementToUpdate) => {
+  const index = elementsArr.findIndex((element) => element.id === elementToUpdate.id);
+  if (index === -1) {
+    return elementsArr;
+  }
+
+  return [
+    ...elementsArr.slice(0, index), elementToUpdate, ...elementsArr.slice(index + 1)
+  ];
 };

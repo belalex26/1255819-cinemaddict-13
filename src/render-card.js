@@ -1,4 +1,4 @@
-import {render, isKeyPressed} from './utils.js';
+/* import {render, isKeyPressed} from './utils.js';
 import FilmPopupView from './view/popup-film';
 import FilmCardView from './view/film-card';
 
@@ -53,3 +53,5 @@ export const renderCard = (container, film) => {
 
   render(container, card);
 };
+
+*/
