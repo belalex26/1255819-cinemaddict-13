@@ -1,4 +1,4 @@
-import {render, remove, isKeyPressed} from '../utils.js';
+import {render, remove, replace, isKeyPressed} from '../utils.js';
 import FilmPopupView from '../view/popup-film';
 import FilmCardView from '../view/film-card';
 import categories from '../view/popup-film';
@@ -6,7 +6,8 @@ import categories from '../view/popup-film';
 const pageBody = document.querySelector(`body`);
 
 export default class Movie {
-  constructor(changeData, viewChange) {
+  constructor(filmContainer, changeData, viewChange) {
+    this._filmContainer = filmContainer;
     this._changeData = changeData;
     this._viewChange = viewChange;
     this._onOpenPopup = this._onOpenPopup.bind(this);
@@ -23,15 +24,27 @@ export default class Movie {
 
   init(container, filmCard) {
     this._filmCard = filmCard;
+    const prevFilmCard = this._card;
 
     this._card = new FilmCardView(this._filmCard);
-    render(container, this._card);
+    // render(container, this._card);
 
     this._card.setClickPopupHandler(this._onOpenPopup);
 
     this._card.setWatchedListClickHandler(this._handlerWatchedListClick);
     this._card.setWatchListClickHandler(this._handlerWatchListClick);
     this._card.setFavoriteClickHandler(this._handlerFavoriteClick);
+
+    if (prevFilmCard === null) {
+      render(container, this._card);
+      return;
+    }
+
+    if (container.contains(prevFilmCard.getElement())) {
+      replace(this._card, prevFilmCard);
+    }
+
+    remove(prevFilmCard);
   }
 
   destroy() {
@@ -63,13 +76,13 @@ export default class Movie {
   cardUpdateHandler(category) {
     switch (category) {
       case categories.WATCHLIST:
-        this._onCardWatchlistClick();
+        this._watchListClickHandler();
         break;
-      case categories.HISTORY:
-        this._onCardToHistoryClick();
+      case categories.WATCHEDLIST:
+        this._watchedListClickHandler();
         break;
       case categories.FAVOURITES:
-        this._onCardFavouritesClick();
+        this._cardFavouriteClickHandler();
         break;
     }
   }

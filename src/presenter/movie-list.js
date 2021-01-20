@@ -16,7 +16,6 @@ const MAX_FILMS_CARDS = 20;
 
 export default class MovieList {
   constructor() {
-    this._movieListPresenter = {};
     this._siteMain = document.querySelector(`.main`);
     this._siteCatalog = new SiteCatalogView();
     this._siteSort = new SiteSortView();
@@ -86,13 +85,13 @@ export default class MovieList {
         break;
       case sortType.RATING:
         if (!this._filmsSortedByRaiting) {
-          this._filmsSortedByRaiting = this._films.slice().sort((previous, current) => {
+          this._filmsSortedByRaiting = this._filmCards.slice().sort((previous, current) => {
             return current.raiting - previous.raiting;
           });
         }
         break;
       case sortType.DEFAULT:
-        this._filmCards = this._sourcedFilmCards;
+        this._filmCards = this._sourcedFilmCards.slice();
         break;
     }
 
@@ -103,9 +102,9 @@ export default class MovieList {
     render(filmsListContainer, `<h2 class="films-list__title">There are no movies in our database</h2>`);
   }
 
-  _renderCard(film, container, block) {
+  _renderCard(container, film, block) {
     const renderMoviePresenter = new MoviePresenter(this._handleFilmChange, this._setDefaultView, block);
-    renderMoviePresenter.init(film, container);
+    renderMoviePresenter.init(container, film);
     this._moviePresenter[film.id] = renderMoviePresenter;
   }
 
@@ -202,4 +201,3 @@ export default class MovieList {
     this._renderFilmsCardMostCommented(filmsContainer);
   }
 }
-

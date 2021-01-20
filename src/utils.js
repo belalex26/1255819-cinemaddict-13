@@ -6,6 +6,12 @@ export const sortType = {
   RATING: `raiting`,
 };
 
+export const categories = {
+  WATCHLIST: `watchList`,
+  WATCHEDLIST: `watchedList`,
+  FAVOURITE: `favorite`
+};
+
 export const getRandomInteger = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -45,6 +51,23 @@ export const render = (container, element, place = `beforeend`) => {
   }
 };
 
+export const replace = (newElement, oldElement) => {
+  if (newElement instanceof AbstractView) {
+    newElement = newElement.getElement();
+  }
+  if (oldElement instanceof AbstractView) {
+    oldElement = oldElement.getElement();
+  }
+
+  const parentElement = oldElement.parentElement;
+
+  if (parentElement === null || newElement === null || oldElement === null) {
+    throw new Error(`One of elements doesn't exist in case of replacement`);
+  }
+
+  parentElement.replaceChild(newElement, oldElement);
+};
+
 export const isKeyPressed = (evt, cb, keyName) => {
   if (evt.key === keyName) {
     cb();
@@ -64,6 +87,7 @@ export const remove = (component) => {
   component.removeElement();
 };
 
+/*
 export const updateUserPropertyArray = (idArr, filmId) => {
   const index = idArr.findIndex((id) => id === filmId);
 
@@ -74,7 +98,7 @@ export const updateUserPropertyArray = (idArr, filmId) => {
 
   idArr.splice(index, 1);
   return idArr;
-};
+};*/
 
 export const updateElement = (elementsArr, elementToUpdate) => {
   const index = elementsArr.findIndex((element) => element.id === elementToUpdate.id);

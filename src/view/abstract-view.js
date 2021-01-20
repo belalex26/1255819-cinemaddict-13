@@ -5,8 +5,8 @@ export default class AbstractView {
     if (new.target === AbstractView) {
       throw new Error(`Can't create Abstract class`);
     }
-    this._callback = {};
     this._element = null;
+    this._callback = {};
   }
 
   getTemplate() {

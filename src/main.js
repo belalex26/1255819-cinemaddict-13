@@ -20,7 +20,7 @@ const filmCards = new Array(MAX_FILMS_CARDS).fill().map(() => {
 });
 const user = new UserMock().userStats;
 
-render(siteHeader, new UserIconView(user.avatar, user.raiting).getElement());
+render(siteHeader, new UserIconView(user.raiting, user.avatar).getElement());
 
 const movieList = new MovieList();
 movieList.init(filmCards);

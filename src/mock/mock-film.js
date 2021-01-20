@@ -163,9 +163,9 @@ export default class MockFilm {
     this._watchList = Boolean(getRandomInteger(0, 1));
     this._favorite = Boolean(getRandomInteger(0, 1));
 
-    this._isInWatchlist = Boolean(getRandomInteger(0, 1));
-    this._isInHistory = Boolean(getRandomInteger(0, 1));
-    this._isFavourite = Boolean(getRandomInteger(0, 1));
+    this._watchList = Boolean(getRandomInteger(0, 1));
+    this._watchedList = Boolean(getRandomInteger(0, 1));
+    this._favourite = Boolean(getRandomInteger(0, 1));
   }
 
 
@@ -186,9 +186,9 @@ export default class MockFilm {
       actors: this._actors,
       country: this._country,
       genre: this._genre,
-      isInWatchlist: this._isInWatchlist,
-      isInHistory: this._isInHistory,
-      isFavourite: this._isFavourite
+      watchList: this._watchList,
+      watchedList: this._watchedList,
+      favourite: this._favourite
     };
   }
 }

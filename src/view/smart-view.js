@@ -11,16 +11,16 @@ export default class SmartView extends AbstractView {
     this.removeElement();
     const newElement = this.getElement();
     parent.replaceChild(newElement, prevElement);
-    this._restoreHandlers();
+    this._restoreHandler();
   }
 
-  _restoreHandlers() {
-    throw new Error(`Can't run abstract method: _restoreHandlers`);
+  _restoreHandler() {
+    throw new Error(`Can't run abstract method: _restoreHandler`);
   }
 
-  updateData(updatedData, onWithoutReloading) {
+  updateData(updatedData, withoutReloadingHandler) {
     this._filmCard = Object.assign({}, this._filmCard, updatedData);
-    if (onWithoutReloading) {
+    if (withoutReloadingHandler) {
       return;
     }
     this.updateElement();
