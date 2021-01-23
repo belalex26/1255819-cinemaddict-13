@@ -1,4 +1,5 @@
-import {getRandomInteger} from '../utils';
+import {getRandomInteger, generateId} from '../utils';
+import {comments} from './comments';
 
 const minNumberOfOffers = 1;
 const maxNumberOfOffers = 5;
@@ -63,6 +64,7 @@ const state = {
     `Wigton Heinz`,
     `Weil Wigton`,
   ],
+
   descriptions: [
     `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget.`,
     `Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra.`,
@@ -80,13 +82,6 @@ const state = {
     `puke`,
     `angry`
   ]
-};
-
-const generateId = () => Date.now() + parseInt(Math.random() * 10000, 10);
-
-const generateDate = () => {
-  const date = new Date(`${getRandomInteger(2005, 2020)} ${getRandomInteger(1, 12)} ${getRandomInteger(1, 31)} ${getRandomInteger(1, 23)}:${getRandomInteger(1, 59)}`);
-  return date;
 };
 
 const shuffle = (data) => {
@@ -109,6 +104,7 @@ const generateRandomSet = (data) => {
   return Array.from(new Set(newData));
 };
 
+
 const generateDescription = () => {
 
   shuffle(state.descriptions);
@@ -128,6 +124,7 @@ const generateDuration = () => {
   return `${randomHours}h ${randomMin}m`;
 };
 
+/*
 const generateComments = () => {
 
   const createNewComment = () => {
@@ -140,6 +137,14 @@ const generateComments = () => {
   };
 
   return new Array(getRandomInteger(0, maxNumberOfOffers)).fill().map(createNewComment);
+};*/
+
+const generateCommentsIdArr = () => {
+  let idArr = [];
+  for (let i = 0; i < getRandomInteger(0, maxNumberOfOffers); i++) {
+    idArr.push(comments[getRandomInteger(0, comments.length - 1)].id);
+  }
+  return idArr;
 };
 
 export default class MockFilm {
@@ -149,7 +154,7 @@ export default class MockFilm {
     this._originalName = generateRandomElement(state.originalNames);
     this._poster = generateRandomElement(state.posters);
     this._description = generateDescription();
-    this._comments = generateComments();
+    this._comments = generateCommentsIdArr();
     this._rating = getRandomInteger(0, 10);
     this._ageLimit = generateRandomElement(state.ageLimits);
     this._date = new Date(`${getRandomInteger(1935, 2020)},${getRandomInteger(1, 12)},${getRandomInteger(0, 30)}`);

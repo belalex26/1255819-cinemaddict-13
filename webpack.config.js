@@ -9,6 +9,7 @@ module.exports = {
   devtool: 'source-map',
   devServer: {
     contentBase: path.resolve(__dirname, 'public'),
+    port: 3000,
     watchContentBase: true,
     overlay: true,
     open: true

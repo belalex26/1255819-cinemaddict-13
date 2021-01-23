@@ -1,29 +1,28 @@
 import AbstractView from './abstract-view';
-import {sortType} from "../utils";
+import {SortType} from "../utils";
 
-const createSort = () => {
+const createSort = (sortType) => {
+
+  const getActiveClass = (elementSortType) => {
+    return (elementSortType === sortType) ? ` sort__button--active` : ``;
+  };
+
   return `<ul class="sort">
-  <li><a href="#" class="sort__button sort__button--active" data-sort-type="${sortType.DEFAULT}">Sort by default</a></li>
-  <li><a href="#" class="sort__button" data-sort="${sortType.DATE}">Sort by date</a></li>
-  <li><a href="#" class="sort__button" data-sort="${sortType.RATING}">Sort by rating</a></li>
+  <li><a href="#" class="sort__button${getActiveClass(SortType.DEFAULT)}" data-sort-type="${SortType.DEFAULT}">Sort by default</a></li>
+  <li><a href="#" class="sort__button${getActiveClass(SortType.DATE)}" data-sort="${SortType.DATE}">Sort by date</a></li>
+  <li><a href="#" class="sort__button${getActiveClass(SortType.RATING)}" data-sort="${SortType.RATING}">Sort by rating</a></li>
 </ul>`;
 };
 
 export default class SiteSort extends AbstractView {
-  constructor() {
+  constructor(sortType) {
     super();
-    this._sortTypeChangeHandler = this._sortTypeChangeHandler.bind(this);
+    this._sortType = sortType;
+    this._onSortTypeChange = this._onSortTypeChange.bind(this);
   }
 
   getTemplate() {
-    return createSort();
-  }
-
-  _removeActiveClass() {
-    const sortButton = this.getElement().querySelectorAll(`.sort__button`);
-    sortButton.forEach((button) => {
-      button.classList.remove(`sort__button--active`);
-    });
+    return createSort(this._sortType);
   }
 
   setSortTypeChangeHandler(callback) {
@@ -31,12 +30,11 @@ export default class SiteSort extends AbstractView {
     this.getElement().addEventListener(`click`, this._sortTypeChangeHandler);
   }
 
-  _sortTypeChangeHandler(evt) {
+  _onSortTypeChange(evt) {
     if (evt.target.tagName !== `A`) {
       return;
     }
     evt.preventDefault();
-    this._removeActiveClass();
     this._callback.sortTypeChangeHandler(evt.target.dataset.sortType);
   }
 }

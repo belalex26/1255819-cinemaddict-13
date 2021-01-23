@@ -1,22 +1,16 @@
 import AbstractView from './abstract-view';
 
-const createFilmsCatalog = (isCatalogEmpty) => {
+const createFilmsCatalog = () => {
   return `<section class="films">
   <section class="films-list">
-    ${isCatalogEmpty ?
-    `<h2 class="films-list__title">There are no movies in our database</h2>` :
-    `<h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
-    <div class="films-list__container"></div>`}
+    <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
+    <div class="films-list__container"></div>
   </section>`;
 };
 
 export default class CatalogFilms extends AbstractView {
-  constructor(isEmpty) {
-    super();
-    this._isEmpty = isEmpty;
-  }
 
   getTemplate() {
-    return createFilmsCatalog(this._isEmpty);
+    return createFilmsCatalog();
   }
 }
