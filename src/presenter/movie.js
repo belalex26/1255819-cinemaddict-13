@@ -6,6 +6,7 @@ import FilmCardView from '../view/film-card';
 
 import CommentPresenter from './comment-presenter';
 
+const ENTER = 13;
 const pageBody = document.querySelector(`body`);
 
 export default class Movie {
@@ -193,7 +194,7 @@ export default class Movie {
   }
 
   _onCommentAdd(evt) {
-    if (evt.keyCode === 13 && evt.ctrlKey) {
+    if (evt.keyCode === ENTER && evt.ctrlKey) {
       const commentData = this._popup.getNewCommentData();
       if (commentData === null) {
         return;
