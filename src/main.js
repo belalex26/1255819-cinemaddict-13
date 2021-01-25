@@ -1,48 +1,87 @@
-import {render} from './utils';
-
-
-import UserIconView from './view/user-icon';
-import TotalFilmsView from './view/total-films';
-
-import UserMock from './mock/user';
-import MockFilm from "./mock/mock-film";
-import {comments} from './mock/comments';
+import {render, remove, renderToast} from './utils';
+import {SiteState} from './const';
 
 import MovieList from './presenter/movie-list';
 import FiltersPresenters from './presenter/filters-presenter';
+import UserPresenter from './presenter/user-presenter';
+import FilmsCounterPresenter from './presenter/films-counter';
 
-import FilmsModel from './model/films-model';
+import FilmModel from './model/film-model';
+import UserModel from './model/user-model';
 import FilterModel from './model/filter-model';
 import CommentsModel from './model/comments-model';
 
-const MAX_FILMS_CARDS = 20;
-const AVAILABLE_FILMS = `123 456`;
+import Api from './api/api';
+import Provider from './api/provider';
+import Store from './api/store';
 
-const siteHeader = document.querySelector(`.header`);
+import Stats from './view/stats';
+
+const END_POINT = `https://13.ecmascript.pages.academy/cinemaddict/`;
+const AUTHORIZATION = `Basic jgdttwsjv6`;
+
+const STORE_PREFIX = `cinemaaddict-localstorage`;
+const STORE_VER = `v1`;
+const STORE_NAME = `${STORE_PREFIX}-${STORE_VER}`;
+
+let stats;
+const changeSiteState = (action) => {
+  switch (action) {
+    case SiteState.TO_MOVIES:
+      catalogPresenter.init();
+      remove(stats);
+      break;
+    case SiteState.TO_STATS:
+      catalogPresenter.destroy();
+      stats = new Stats(filmsModel.getFilms(), userModel.getRaiting());
+      render(siteMain, stats);
+      break;
+  }
+};
+
+const baseApi = new Api(END_POINT, AUTHORIZATION);
+const store = new Store(STORE_NAME, window.localStorage);
+const api = new Provider(baseApi, store);
+
+const siteMain = document.querySelector(`.main`);
+const siteheader = document.querySelector(`.header`);
 const siteFooter = document.querySelector(`.footer`);
 const footerStats = siteFooter.querySelector(`.footer__statistics`);
 
-const filmCards = new Array(MAX_FILMS_CARDS).fill().map(() => {
-  return new MockFilm().getNewCardFilm();
-});
-const user = new UserMock().userStats;
 
-const filmsModel = new FilmsModel();
-filmsModel.setFilms(filmCards);
-
+const filmsModel = new FilmModel(api);
 const filterModel = new FilterModel();
+const commentsModel = new CommentsModel(api);
+const userModel = new UserModel(filmsModel);
 
-const commentsModel = new CommentsModel();
-commentsModel.setComments(comments);
+const userPresenter = new UserPresenter(userModel);
+userPresenter.init(siteheader);
 
-render(siteHeader, new UserIconView(user.avatar, user.raiting).getElement());
-
-const siteMain = document.querySelector(`.main`);
-
-const filtersPresenter = new FiltersPresenters(filmsModel, filterModel);
+const filtersPresenter = new FiltersPresenters(filmsModel, filterModel, changeSiteState);
 filtersPresenter.init(siteMain);
 
 const catalogPresenter = new MovieList(filmsModel, filterModel, commentsModel);
 catalogPresenter.init(siteMain);
 
-render(footerStats, new TotalFilmsView(AVAILABLE_FILMS), `beforeend`);
+const filmsCounterPresenter = new FilmsCounterPresenter(filmsModel);
+filmsCounterPresenter.init(footerStats);
+
+api.getFilms()
+.then((films) => filmsModel.setFilms(films))
+.catch(() => {
+  filmsModel.setFilms([]);
+});
+
+window.addEventListener(`load`, () => {
+  navigator.serviceWorker.register(`/sw.js`);
+});
+
+window.addEventListener(`online`, () => {
+  document.title = document.title.replace(` [offline]`, ``);
+  api.sync();
+});
+
+window.addEventListener(`offline`, () => {
+  document.title += ` [offline]`;
+  renderToast(`Lost connection`);
+});

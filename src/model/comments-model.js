@@ -1,9 +1,10 @@
 import Observer from './observer';
-import {ModelMethod} from '../utils';
+import {ModelMethod} from '../const';
 
 export default class CommentsModel extends Observer {
-  constructor() {
+  constructor(api) {
     super();
+    this._api = api;
     this._comments = [];
     this._observers = {
       deleteComment: [],
@@ -11,21 +12,42 @@ export default class CommentsModel extends Observer {
     };
   }
 
-  setComments(comments) {
-    this._comments = comments;
-  }
-
-  getComments() {
-    return this._comments;
+  getComments(filmId, isOldNeeded) {
+    if (isOldNeeded) {
+      return new Promise((resolve) => resolve(this._comments));
+    }
+    return this._api.getComments(filmId)
+    .then((comments) => {
+      this._comments = comments;
+      return this._comments;
+    });
   }
 
   deleteComment(commentToDelete) {
-    this._comments = this._comments.filter((comment) => (comment.id !== commentToDelete.id));
-    this.notify(ModelMethod.DELETE_COMMENT, commentToDelete);
+    return this._api.deleteComment(commentToDelete.id)
+    .then(() => {
+      this._comments = this._comments.filter((comment) => (comment.id !== commentToDelete.id));
+      this.notify(ModelMethod.DELETE_COMMENT, commentToDelete);
+    });
   }
 
-  addComment(commentToAdd) {
-    this._comments.push(commentToAdd);
-    this.notify(ModelMethod.ADD_COMMENT, commentToAdd);
+  addComment(commentToAdd, filmId) {
+    return this._api.addComment(commentToAdd, filmId)
+    .then((response) => {
+      this._comments = response.comments;
+      this.notify(ModelMethod.ADD_COMMENT, response);
+    });
+  }
+
+  getErrorComment() {
+    const errorComment = {
+      id: `!!!`,
+      author: `site`,
+      date: new Date(),
+      emotion: `angry`,
+      text: `Не удалось загрузить комментарии.`
+    };
+    this._comments = [errorComment];
+    return errorComment;
   }
 }

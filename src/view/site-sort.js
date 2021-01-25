@@ -1,5 +1,5 @@
 import AbstractView from './abstract-view';
-import {SortType} from "../utils";
+import {SortType} from '../const';
 
 const createSort = (sortType) => {
 
@@ -25,16 +25,16 @@ export default class SiteSort extends AbstractView {
     return createSort(this._sortType);
   }
 
-  setSortTypeChangeHandler(callback) {
-    this._callback.sortTypeChangeHandler = callback;
-    this.getElement().addEventListener(`click`, this._sortTypeChangeHandler);
-  }
-
   _onSortTypeChange(evt) {
     if (evt.target.tagName !== `A`) {
       return;
     }
     evt.preventDefault();
     this._callback.sortTypeChangeHandler(evt.target.dataset.sortType);
+  }
+
+  setSortTypeChangeHandler(callback) {
+    this._callback.sortTypeChangeHandler = callback;
+    this.getElement().addEventListener(`click`, this._sortTypeChangeHandler);
   }
 }
