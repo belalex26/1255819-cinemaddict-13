@@ -13,6 +13,8 @@ export default class Movie {
   constructor(commentsModel, filmChangeCb, closePopupsCb, filterModel, updateMostCommentedBlockCb) {
 
     this._pageBody = document.querySelector(`body`);
+    this._card = null;
+    this._popup = null;
 
     this._commentsModel = commentsModel;
     this._filterModel = filterModel;
@@ -282,4 +284,3 @@ export default class Movie {
     });
   }
 }
-

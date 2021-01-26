@@ -21,6 +21,13 @@ export default class MovieList {
     this._filterModel = filterModel;
     this._commentsModel = commentsModel;
 
+    this._siteSortView = null;
+    this._siteMenuView = null;
+    this._noFilmsView = null;
+    this._userIconView = null;
+    this._siteCatalog = null;
+    this._filmsSortedByDate = null;
+
     this._showMoreButton = new ShowMoreButtonView();
     this._topRaitedView = new TopRatingContainerView();
     this._mostCommentedView = new MostCommentedContainerView();

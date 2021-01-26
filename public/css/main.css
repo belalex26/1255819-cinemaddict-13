@@ -1104,7 +1104,7 @@ button {
   padding-top: 50px;
   padding-bottom: 50px;
 }
-
+/*
 .toast {
   width: 100%;
   position: fixed;
@@ -1118,7 +1118,7 @@ button {
   padding-top: 15px;
   padding-bottom: 15px;
   color: black;
-}
+}*/
 
 @keyframes shake {
   0%,
