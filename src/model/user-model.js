@@ -1,55 +1,50 @@
 import Observer from './observer';
-import {ModelMethod, UserRaiting} from '../const';
+import {ModelMethod, UserRating} from '../const';
 
 export default class UserModel extends Observer {
   constructor(filmsModel) {
     super();
     this._filmsModel = filmsModel;
-    this._userRaiting = UserRaiting.NOVICE;
+    this._userRating = UserRating.NOVICE;
     this._observers = {
-      updateRaiting: []
+      updateRating: []
     };
 
-    this.updateRaiting = this.updateRaiting.bind(this);
+    this.updateRating = this.updateRating.bind(this);
 
-    this._filmsModel.addObserver(ModelMethod.SET_FILMS, this.updateRaiting);
-    this._filmsModel.addObserver(ModelMethod.UPDATE_FILM, this.updateRaiting);
-    this._filmsModel.addObserver(ModelMethod.UPDATE_FILM_WITH_RERENDER, this.updateRaiting);
+    this._filmsModel.addObserver(ModelMethod.SET_FILMS, this.updateRating);
+    this._filmsModel.addObserver(ModelMethod.UPDATE_FILM, this.updateRating);
+    this._filmsModel.addObserver(ModelMethod.UPDATE_FILM_WITH_RERENDER, this.updateRating);
+  }
+
+  getRating() {
+    return this._userRating;
   }
 
   _getUserRaiting(watchedFilms) {
     if (watchedFilms > 20) {
-      return UserRaiting.MOVIE_BUFF;
+      return UserRating.MOVIE_BUFF;
     } else if (watchedFilms > 10 && watchedFilms <= 20) {
-      return UserRaiting.FAN;
+      return UserRating.FAN;
     } else if (watchedFilms > 0 && watchedFilms <= 10) {
-      return UserRaiting.NOVICE;
+      return UserRating.NOVICE;
     }
     return null;
   }
 
-  _getWatchedFilmsNumber(films) {
-    return films.reduce((acc, currentFilm) => acc + currentFilm.isInHistory, 0);
-  }
-
-  _getWatchedFilmsNumber(films) {
-    return films.reduce((acc, currentFilm) => acc + currentFilm.isInHistory, 0);
-  }
-
-  updateRaiting() {
+  updateRating() {
     const watchedFilms = this._getWatchedFilmsNumber(this._filmsModel.getFilms());
-    const userRaiting = this._getUserRaiting(watchedFilms);
+    const userRating = this._getUserRaiting(watchedFilms);
 
-    if (this._userRaiting === userRaiting) {
+    if (this._userRating === userRating) {
       return;
     }
-    this._userRaiting = userRaiting;
+    this._userRating = userRating;
 
-    this.notify(ModelMethod.UPDATE_USER_RAITING, this._userRaiting);
+    this.notify(ModelMethod.UPDATE_USER_RATING, this._userRating);
   }
 
-  getRaiting() {
-    return this._userRaiting;
+  _getWatchedFilmsNumber(films) {
+    return films.reduce((acc, currentFilm) => acc + currentFilm.isInHistory, 0);
   }
 }
-

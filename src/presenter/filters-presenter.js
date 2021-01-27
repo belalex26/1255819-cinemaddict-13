@@ -9,6 +9,7 @@ export default class Filters {
     this._filterModel = filterModel;
     this._changeSiteState = changeSiteStateCb;
 
+    this._siteMenuView = null;
     this._currentFilter = Category.All;
     this._isShowingFilms = true;
 
@@ -24,6 +25,7 @@ export default class Filters {
   }
 
   init(container) {
+    this.container = container;
 
     const prevFiltersView = this._siteMenuView;
 
@@ -34,31 +36,12 @@ export default class Filters {
     this._siteMenuView.setStatsButtonClickHandler(this._onStatsButtonClick);
 
     if (!prevFiltersView) {
-      render(container, this._siteMenuView, RenderPosition.AFTERBEGIN);
+      render(this.container, this._siteMenuView, RenderPosition.AFTERBEGIN);
       return;
     }
 
     replace(this._siteMenuView, prevFiltersView);
     remove(prevFiltersView);
-  }
-
-  _onFilmChange() {
-    this.init();
-  }
-
-  _onStatsButtonClick() {
-    if (!this._isShowingFilms) {
-      return;
-    }
-    this._filtersButtons.forEach((filterButton) => {
-      filterButton.classList.remove(`main-navigation__item--active`);
-    });
-
-    this._siteMenuView.getElement().querySelector(`.main-navigation__additional`).classList.add(`main-navigation__additional--active`);
-
-    this._isShowingFilms = false;
-
-    this._changeSiteState(SiteState.TO_STATS);
   }
 
   _onViewAction(eventType, update) {
@@ -69,6 +52,14 @@ export default class Filters {
         }
         this._filterModel.updateFilter(update);
     }
+  }
+
+  _onFilmChange() {
+    this.init();
+  }
+
+  _onFilterChange(filterType) {
+    this._onViewAction(UserAction.UPDATE_FILTER, filterType);
   }
 
   _changeFilter(newFilter) {
@@ -91,7 +82,18 @@ export default class Filters {
     this._currentFilter = newFilter;
   }
 
-  _onFilterChange(filterType) {
-    this._onViewAction(UserAction.UPDATE_FILTER, filterType);
+  _onStatsButtonClick() {
+    if (!this._isShowingFilms) {
+      return;
+    }
+    this._filtersButtons.forEach((filterButton) => {
+      filterButton.classList.remove(`main-navigation__item--active`);
+    });
+
+    this._siteMenuView.getElement().querySelector(`.main-navigation__additional`).classList.add(`main-navigation__additional--active`);
+
+    this._isShowingFilms = false;
+
+    this._changeSiteState(SiteState.TO_STATS);
   }
 }

@@ -13,13 +13,14 @@ export default class FilmsCounter {
   }
 
   init(container) {
+    this._container = container;
     const prevCounterView = this._counterView;
 
     this._filmNumber = this._filmsModel.getFilms().length;
     this._counterView = new FilmsNumberView(this._filmNumber);
 
     if (!prevCounterView) {
-      render(container, this._counterView);
+      render(this._container, this._counterView);
       return;
     }
 

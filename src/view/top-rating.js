@@ -1,12 +1,12 @@
 import AbstractView from './abstract-view';
 
-const createTopRating = () => {
+const createTopRatedContainer = () => {
   return `<section class="films-list films-list--extra">
   <h2 class="films-list__title">Top rated</h2><div class="films-list__container"></div></section>`;
 };
 
-export default class TopRating extends AbstractView {
+export default class TopRatedContainer extends AbstractView {
   getTemplate() {
-    return createTopRating();
+    return createTopRatedContainer();
   }
 }

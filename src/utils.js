@@ -1,6 +1,7 @@
 import {Category, RenderPosition} from './const';
 import AbstractView from './view/abstract-view';
 
+
 export const getRandomInteger = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -78,6 +79,13 @@ export const updateUserPropertyArray = (idArr, filmId) => {
   return idArr;
 };
 
+export const filter = {
+  [Category.ALL]: (films) => films,
+  [Category.WATCHLIST]: (films) => films.filter((film) => (film.isInWatchlist)),
+  [Category.HISTORY]: (films) => films.filter((film) => (film.isInHistory)),
+  [Category.FAVOURITES]: (films) => films.filter((film) => (film.isFavourite))
+};
+
 export const getDuration = (duration) => {
   const hours = duration / 60;
   const minutes = duration % 60;
@@ -100,11 +108,4 @@ export const renderToast = (message) => {
   setTimeout(() => {
     toast.remove();
   }, SHOW_TIME);
-};
-
-export const filter = {
-  [Category.All]: (films) => films,
-  [Category.WATCHLIST]: (films) => films.filter((film) => (film.isInWatchlist)),
-  [Category.HISTORY]: (films) => films.filter((film) => (film.isInHistory)),
-  [Category.FAVOURITES]: (films) => films.filter((film) => (film.isFavourite))
 };

@@ -75,6 +75,8 @@ const renderChart = (statisticCtx) => {
     }
   });
 };
+
+
 const createStats = (data) => {
   const chosenPeriodTime = (data.period === StatsPeriod.ALL) ? -Infinity : dayjs().subtract(1, `${data.period}`);
 
@@ -124,7 +126,7 @@ const createStats = (data) => {
   <p class="statistic__rank">
     Your rank
     <img class="statistic__img" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
-    <span class="statistic__rank-label">${data.userRaiting}</span>
+    <span class="statistic__rank-label">${data.userRating}</span>
   </p>
 
   <form action="https://echo.htmlacademy.ru/" method="get" class="statistic__filters">
@@ -169,13 +171,14 @@ const createStats = (data) => {
 };
 
 export default class Stats extends SmartView {
-  constructor(films, userRaiting) {
+  constructor(films, userRating) {
     super();
     this._data = {
       films,
-      userRaiting,
+      userRating,
       period: StatsPeriod.ALL
     };
+    this._chart = null;
 
     this._onPeriodButtonClick = this._onPeriodButtonClick.bind(this);
 
@@ -185,6 +188,13 @@ export default class Stats extends SmartView {
 
   getTemplate() {
     return createStats(this._data);
+  }
+
+  removeElement() {
+    super.removeElement();
+    if (this._chart !== null) {
+      this._chart = null;
+    }
   }
 
   _onPeriodButtonClick(evt) {
@@ -209,12 +219,5 @@ export default class Stats extends SmartView {
     }
     const statisticCtx = this.getElement().querySelector(`.statistic__chart`);
     this._chart = renderChart(statisticCtx);
-  }
-
-  removeElement() {
-    super.removeElement();
-    if (this._chart !== null) {
-      this._chart = null;
-    }
   }
 }

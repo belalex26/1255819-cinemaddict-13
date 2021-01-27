@@ -7,7 +7,7 @@ const createFilmCard = (film) => {
     return (film[property] === true) ? ` film-card__controls-item--active` : ``;
   };
 
-  const {title, raiting, date, duration, genre, poster, description, comments} = film;
+  const {title, rating, date, duration, genre, poster, description, comments} = film;
 
   const maxLengthDescription = 139;
 
@@ -24,7 +24,7 @@ const createFilmCard = (film) => {
 
   return `<article class="film-card">
   <h3 class="film-card__title">${title}</h3>
-  <p class="film-card__rating">${raiting}</p>
+  <p class="film-card__rating">${rating}</p>
   <p class="film-card__info">
     <span class="film-card__year">${new Date(date).getFullYear()}</span>
     <span class="film-card__duration">${getDuration(duration)}</span>
@@ -46,7 +46,6 @@ export default class FilmCard extends AbstractView {
     super();
     this._film = film;
     this._onPosterClick = this._onPosterClick.bind(this);
-
     this._onTitleClick = this._onTitleClick.bind(this);
     this._onCommentsClick = this._onCommentsClick.bind(this);
     this._onToWatchListButtonClick = this._onToWatchListButtonClick.bind(this);
@@ -93,11 +92,6 @@ export default class FilmCard extends AbstractView {
     this.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, this._onPosterClick);
   }
 
-  setWatchedButtonClickHandler(callback) {
-    this._callback.watchedClick = callback;
-    this.getElement().querySelector(`.film-card__controls-item--mark-as-watched`).addEventListener(`click`, this._onWatchedButtonClick);
-  }
-
   setTitleClickHandler(callback) {
     this._callback.titleClick = callback;
     this.getElement().querySelector(`.film-card__title`).addEventListener(`click`, this._onTitleClick);
@@ -116,5 +110,10 @@ export default class FilmCard extends AbstractView {
   setToFavouritesButtonClickHandler(callback) {
     this._callback.favouritesClick = callback;
     this.getElement().querySelector(`.film-card__controls-item--favorite`).addEventListener(`click`, this._onToFavouritesButtonClick);
+  }
+
+  setWatchedButtonClickHandler(callback) {
+    this._callback.watchedClick = callback;
+    this.getElement().querySelector(`.film-card__controls-item--mark-as-watched`).addEventListener(`click`, this._onWatchedButtonClick);
   }
 }

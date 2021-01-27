@@ -1,4 +1,4 @@
-const CACHE_PREFIX = `cinemaaddict-cache`;
+/* const CACHE_PREFIX = `cinemaaddict-cache`;
 const CACHE_VER = `v1`;
 const CACHE_NAME = `${CACHE_PREFIX}-${CACHE_VER}`;
 
@@ -86,3 +86,4 @@ const onFetchSend = (evt) => {
 };
 
 self.addEventListener(`fetch`, onFetchSend);
+*/

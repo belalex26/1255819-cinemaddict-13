@@ -33,7 +33,7 @@ const changeSiteState = (action) => {
       break;
     case SiteState.TO_STATS:
       catalogPresenter.destroy();
-      stats = new Stats(filmsModel.getFilms(), userModel.getRaiting());
+      stats = new Stats(filmsModel.getFilms(), userModel.getRating());
       render(siteMain, stats);
       break;
   }
@@ -66,12 +66,14 @@ catalogPresenter.init(siteMain);
 const filmsCounterPresenter = new FilmsCounterPresenter(filmsModel);
 filmsCounterPresenter.init(footerStats);
 
+
 api.getFilms()
 .then((films) => filmsModel.setFilms(films))
 .catch(() => {
   filmsModel.setFilms([]);
 });
 
+/*
 window.addEventListener(`load`, () => {
   navigator.serviceWorker.register(`/sw.js`);
 });
@@ -85,3 +87,4 @@ window.addEventListener(`offline`, () => {
   document.title += ` [offline]`;
   renderToast(`Lost connection`);
 });
+*/

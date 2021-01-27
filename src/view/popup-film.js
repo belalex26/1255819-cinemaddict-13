@@ -5,9 +5,24 @@ import SmartView from './smart-view';
 import dayjs from 'dayjs';
 
 const genreOneTitle = document.getElementsByClassName(`genres`);
-
 const createFilmPopup = (data) => {
-  const {title, originalTitle, raiting, date, duration, genre, poster, description, comments, director, writers, actors, country, age, userComment, chosenSmile, isInWatchlist, isInHistory, isFavourite} = data;
+  const {title, originalTitle, rating, date, duration, genre, poster, description, comments, director, writers, actors, country, age, userComment, chosenSmile, isInWatchlist, isInHistory, isFavourite} = data;
+
+  const genres = genre.map((value, index) => {
+    return `<span class="film-details__genre">${genre[index]}</span>`;
+  }).join(``);
+
+  const insertGenre = () => {
+
+    let genreTitle = genreOneTitle.innerHTML = `Genres`;
+
+    if (genre.length < 2) {
+      genreTitle = genreOneTitle.innerHTML = `Genre`;
+    }
+    return genreTitle;
+  };
+
+  const insertGenreTitle = insertGenre();
 
   const emojiRadio = EMOTIONS.map((value, index) => {
     const emotion = EMOTIONS[index];
@@ -24,22 +39,6 @@ const createFilmPopup = (data) => {
   const getFilmStatusClass = (property) => {
     return property ? ` checked` : ``;
   };
-
-  const genres = genre.map((value, index) => {
-    return `<span class="film-details__genre">${genre[index]}</span>`;
-  }).join(`,`);
-
-  const insertGenre = () => {
-
-    let genreTitle = genreOneTitle.innerHTML = `Genre`;
-
-    if (genre.length >= 2) {
-      genreTitle = genreOneTitle.innerHTML = `Genres`;
-    }
-    return genreTitle;
-  };
-
-  const insertGenreTitle = insertGenre();
 
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
@@ -62,7 +61,7 @@ const createFilmPopup = (data) => {
             </div>
 
             <div class="film-details__rating">
-              <p class="film-details__total-rating">${raiting}</p>
+              <p class="film-details__total-rating">${rating}</p>
             </div>
           </div>
 
@@ -92,7 +91,7 @@ const createFilmPopup = (data) => {
               <td class="film-details__cell">${country}</td>
             </tr>
             <tr class="film-details__row">
-              <td class="genres film-details__term">${insertGenreTitle}</td>
+              <td class=" genres film-details__term">${insertGenreTitle}</td>
               <td class="film-details__cell">
                 ${genres}
             </tr>
@@ -146,25 +145,34 @@ const SHAKE_DURATION = 500;
 export default class FilmPopup extends SmartView {
   constructor(film, onCardUpdate, renderCommentsCb) {
     super();
+    this._data = this._parseFilmTodata(film);
     this._onCardUpdate = onCardUpdate;
     this._renderComments = renderCommentsCb;
-    this._data = this._parseFilmTodata(film);
+
     this._isCommentFormDisabled = false;
     this._isOnlineListening = false;
 
-    this.onCommentFormError = this.onCommentFormError.bind(this);
     this._onCrossClick = this._onCrossClick.bind(this);
     this._onCommentChange = this._onCommentChange.bind(this);
     this._onEmojiInputClick = this._onEmojiInputClick.bind(this);
     this._onWatchlistButtonClick = this._onWatchlistButtonClick.bind(this);
     this._onHistoryButtonClick = this._onHistoryButtonClick.bind(this);
     this._onFavouritesButtonClick = this._onFavouritesButtonClick.bind(this);
+    this.onCommentFormError = this.onCommentFormError.bind(this);
 
     this._setHandlers();
   }
 
   getTemplate() {
     return createFilmPopup(this._data);
+  }
+
+  _setHandlers() {
+    this.getElement().querySelector(`.film-details__comment-input`).addEventListener(`input`, this._onCommentChange);
+    this.getElement().querySelector(`.film-details__emoji-list`).addEventListener(`click`, this._onEmojiInputClick);
+    this.getElement().querySelector(`#watchlist`).addEventListener(`click`, this._onWatchlistButtonClick);
+    this.getElement().querySelector(`#watched`).addEventListener(`click`, this._onHistoryButtonClick);
+    this.getElement().querySelector(`#favorite`).addEventListener(`click`, this._onFavouritesButtonClick);
   }
 
   _parseFilmTodata(film) {
@@ -234,17 +242,9 @@ export default class FilmPopup extends SmartView {
     this._data.isInFavourites = !this._data.isInFavourites;
   }
 
-  setCrossClickHandler(cb) {
-    this._callback.crossClick = cb;
+  setCrossClickHandler(callback) {
+    this._callback.crossClick = callback;
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._onCrossClick);
-  }
-
-  _setHandlers() {
-    this.getElement().querySelector(`.film-details__comment-input`).addEventListener(`input`, this._onCommentChange);
-    this.getElement().querySelector(`.film-details__emoji-list`).addEventListener(`click`, this._onEmojiInputClick);
-    this.getElement().querySelector(`#watchlist`).addEventListener(`click`, this._onWatchlistButtonClick);
-    this.getElement().querySelector(`#watched`).addEventListener(`click`, this._onHistoryButtonClick);
-    this.getElement().querySelector(`#favorite`).addEventListener(`click`, this._onFavouritesButtonClick);
   }
 
   _restoreHandlers() {
@@ -292,4 +292,3 @@ export default class FilmPopup extends SmartView {
     }, SHAKE_DURATION);
   }
 }
-
