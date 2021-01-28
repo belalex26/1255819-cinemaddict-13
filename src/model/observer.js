@@ -7,8 +7,8 @@ export default class Observer {
     this._observers[method].push(callback);
   }
 
-  removeObserver(callback) {
-    this._observers.filter((observer) => observer !== callback);
+  removeObserver(method, callback) {
+    this._observers[method].filter((observer) => observer !== callback);
   }
 
   notify(method, payload) {

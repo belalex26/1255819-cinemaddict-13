@@ -1,11 +1,8 @@
-import SmartView from './smart-view';
 import {StatsPeriod} from '../const';
-
+import Smart from './smart-view';
 import dayjs from "dayjs";
 import Chart from "chart.js";
-import ChartDataLabels from "chartjs-plugin-datalabels";
-
-const genres = new Map();
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 const renderChart = (statisticCtx) => {
   const sortedGeners = [...genres].sort((previous, current) => current[1] - previous[1]);
@@ -76,7 +73,7 @@ const renderChart = (statisticCtx) => {
   });
 };
 
-
+const genres = new Map();
 const createStats = (data) => {
   const chosenPeriodTime = (data.period === StatsPeriod.ALL) ? -Infinity : dayjs().subtract(1, `${data.period}`);
 
@@ -126,7 +123,7 @@ const createStats = (data) => {
   <p class="statistic__rank">
     Your rank
     <img class="statistic__img" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
-    <span class="statistic__rank-label">${data.userRating}</span>
+    <span class="statistic__rank-label">${data.userRaiting}</span>
   </p>
 
   <form action="https://echo.htmlacademy.ru/" method="get" class="statistic__filters">
@@ -170,12 +167,12 @@ const createStats = (data) => {
 </section>`;
 };
 
-export default class Stats extends SmartView {
-  constructor(films, userRating) {
+export default class Stats extends Smart {
+  constructor(films, userRaiting) {
     super();
     this._data = {
       films,
-      userRating,
+      userRaiting,
       period: StatsPeriod.ALL
     };
     this._chart = null;

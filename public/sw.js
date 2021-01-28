@@ -1,5 +1,5 @@
-/* const CACHE_PREFIX = `cinemaaddict-cache`;
 const CACHE_VER = `v1`;
+const CACHE_PREFIX = `cinemaaddict-cache`;
 const CACHE_NAME = `${CACHE_PREFIX}-${CACHE_VER}`;
 
 const HTTP_STATUS_OK = 200;
@@ -86,4 +86,3 @@ const onFetchSend = (evt) => {
 };
 
 self.addEventListener(`fetch`, onFetchSend);
-*/

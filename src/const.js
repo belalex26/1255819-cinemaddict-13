@@ -1,3 +1,22 @@
+export const RenderPosition = {
+  BEFOREEND: `beforeend`,
+  AFTERBEGIN: `afterbegin`
+};
+
+export const SortType = {
+  DEFAULT: `default`,
+  DATE: `date`,
+  RAITING: `raiting`,
+  COMMENTS: `comments`
+};
+
+export const Category = {
+  All: `all`,
+  WATCHLIST: `watchlist`,
+  HISTORY: `history`,
+  FAVOURITES: `favourites`
+};
+
 export const EMOTIONS = [
   `smile`,
   `sleeping`,
@@ -9,20 +28,6 @@ export const UpdateType = {
   PATCH: `PATCH`,
   MINOR: `MINOR`,
   MAJOR: `MAJOR`
-};
-
-export const Category = {
-  ALL: `all`,
-  WATCHLIST: `watchlist`,
-  HISTORY: `history`,
-  FAVOURITES: `favourites`
-};
-
-export const SortType = {
-  DEFAULT: `default`,
-  DATE: `date`,
-  RATING: `rating`,
-  COMMENTS: `comments`
 };
 
 export const UserAction = {
@@ -41,10 +46,10 @@ export const ModelMethod = {
   ADD_COMMENT: `addComment`,
   DELETE_COMMENT: `deleteComment`,
   SET_FILMS: `setFilms`,
-  UPDATE_USER_RATING: `updateRating`
+  UPDATE_USER_RAITING: `updateRaiting`
 };
 
-export const UserRating = {
+export const UserRaiting = {
   NOVICE: `novice`,
   FAN: `fan`,
   MOVIE_BUFF: `movie buff`
@@ -64,11 +69,6 @@ export const StatsPeriod = {
 };
 
 export const FilmCardContainer = {
-  RATED: `rated`,
+  RAITED: `raited`,
   COMMENTED: `commented`
-};
-
-export const RenderPosition = {
-  BEFOREEND: `beforeend`,
-  AFTERBEGIN: `afterbegin`
 };

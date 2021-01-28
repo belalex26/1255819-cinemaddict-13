@@ -1,27 +1,26 @@
-import {render, remove, replace, isKeyPressed} from '../utils';
-import {Category, UserAction, ModelMethod} from '../const';
+import {render, replace, remove, isKeyPressed} from '../utils';
 
-import FilmPopupView from '../view/popup-film';
 import FilmCardView from '../view/film-card';
-
+import FilmPopupView from '../view/popup-film';
+import {Category, UserAction, ModelMethod} from "../const.js";
 import CommentPresenter from './comment-presenter';
 
 const ENTER = 13;
 const pageBody = document.querySelector(`body`);
 
-
 export default class Movie {
   constructor(commentsModel, filmChangeCb, closePopupsCb, filterModel, updateMostCommentedBlockCb) {
     this._commentsModel = commentsModel;
+
     this._filmChange = filmChangeCb;
     this._closePopups = closePopupsCb;
+
     this._filterModel = filterModel;
-
-    this._commentPresenters = {};
-
     this._updateMostCommentedBlock = updateMostCommentedBlockCb;
 
     this._card = null;
+    this._commentPresenters = {};
+
     this._popup = null;
 
     this.closePopup = this.closePopup.bind(this);
@@ -215,14 +214,14 @@ export default class Movie {
         {},
         this._film,
         {
-          isInWatchlist: !this._film.isInWatchlist,
+          isInWatchList: !this._film.isInWatchlist,
           isSynced: false
         }
     ));
   }
 
   _onCardFavouritesClick() {
-    const action = (this._filterModel.getFilter() !== Category.ALL && this._film.isFavourite) ? UserAction.UPDATE_FILM_CATEGORY_WITH_RERENDER : UserAction.UPDATE_FILM_CATEGORY;
+    const action = (this._filterModel.getFilter() !== Category.All && this._film.isFavourite) ? UserAction.UPDATE_FILM_CATEGORY_WITH_RERENDER : UserAction.UPDATE_FILM_CATEGORY;
     this._filmChange(action, Object.assign(
         {},
         this._film,
@@ -234,7 +233,7 @@ export default class Movie {
   }
 
   _onCardToHistoryClick() {
-    const action = (this._filterModel.getFilter() !== Category.ALL && this._film.isInHistory) ? UserAction.UPDATE_FILM_CATEGORY_WITH_RERENDER : UserAction.UPDATE_FILM_CATEGORY;
+    const action = (this._filterModel.getFilter() !== Category.All && this._film.isInHistory) ? UserAction.UPDATE_FILM_CATEGORY_WITH_RERENDER : UserAction.UPDATE_FILM_CATEGORY;
     this._filmChange(action, Object.assign(
         {},
         this._film,

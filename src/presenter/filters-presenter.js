@@ -1,14 +1,12 @@
-import {remove, render, replace} from '../utils';
-import {UserAction, ModelMethod, Category, SiteState, RenderPosition} from "../const.js";
-
 import SiteMenuView from '../view/site-menu';
+import {UserAction, ModelMethod, Category, SiteState, RenderPosition} from "../const.js";
+import {remove, render, replace} from '../utils';
 
 export default class Filters {
   constructor(filmsModel, filterModel, changeSiteStateCb) {
     this._filmsModel = filmsModel;
     this._filterModel = filterModel;
     this._changeSiteState = changeSiteStateCb;
-
     this._siteMenuView = null;
     this._currentFilter = Category.All;
     this._isShowingFilms = true;
@@ -24,7 +22,7 @@ export default class Filters {
     this._filmsModel.addObserver(ModelMethod.SET_FILMS, this._onFilmChange);
   }
 
-  init(container) {
+  init(container = this.container) {
     this.container = container;
 
     const prevFiltersView = this._siteMenuView;
@@ -54,14 +52,6 @@ export default class Filters {
     }
   }
 
-  _onFilmChange() {
-    this.init();
-  }
-
-  _onFilterChange(filterType) {
-    this._onViewAction(UserAction.UPDATE_FILTER, filterType);
-  }
-
   _changeFilter(newFilter) {
     if (!this._isShowingFilms) {
       this._siteMenuView.getElement().querySelector(`.main-navigation__additional`).classList.remove(`main-navigation__additional--active`);
@@ -82,6 +72,10 @@ export default class Filters {
     this._currentFilter = newFilter;
   }
 
+  _onFilterChange(filterType) {
+    this._onViewAction(UserAction.UPDATE_FILTER, filterType);
+  }
+
   _onStatsButtonClick() {
     if (!this._isShowingFilms) {
       return;
@@ -91,9 +85,13 @@ export default class Filters {
     });
 
     this._siteMenuView.getElement().querySelector(`.main-navigation__additional`).classList.add(`main-navigation__additional--active`);
-
     this._isShowingFilms = false;
-
     this._changeSiteState(SiteState.TO_STATS);
   }
+
+  _onFilmChange() {
+    this.init();
+  }
 }
+
+

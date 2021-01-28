@@ -6,9 +6,7 @@ import FilmsNumberView from '../view/films-number';
 export default class FilmsCounter {
   constructor(filmsModel) {
     this._filmsModel = filmsModel;
-
     this._onFilmsGet = this._onFilmsGet.bind(this);
-
     this._filmsModel.addObserver(ModelMethod.SET_FILMS, this._onFilmsGet);
   }
 

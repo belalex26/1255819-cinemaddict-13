@@ -1,4 +1,5 @@
 import AbstractView from './abstract-view';
+
 const createNoFilmsTemplate = () => {
   return `<section class="films">
             <section class="films-list">

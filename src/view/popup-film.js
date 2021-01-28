@@ -1,12 +1,13 @@
-import {EMOTIONS, Category} from '../const';
+import {EMOTIONS, Category} from '../const.js';
 import {getDuration} from '../utils';
-import SmartView from './smart-view';
 
-import dayjs from 'dayjs';
+import Smart from './smart-view';
+import dayjs from "dayjs";
 
 const genreOneTitle = document.getElementsByClassName(`genres`);
+
 const createFilmPopup = (data) => {
-  const {title, originalTitle, rating, date, duration, genre, poster, description, comments, director, writers, actors, country, age, userComment, chosenSmile, isInWatchlist, isInHistory, isFavourite} = data;
+  const {title, originalTitle, raiting, date, duration, genre, poster, description, comments, director, writers, actors, country, age, userComment, chosenSmile, isInWatchlist, isInHistory, isFavourite} = data;
 
   const genres = genre.map((value, index) => {
     return `<span class="film-details__genre">${genre[index]}</span>`;
@@ -61,7 +62,7 @@ const createFilmPopup = (data) => {
             </div>
 
             <div class="film-details__rating">
-              <p class="film-details__total-rating">${rating}</p>
+              <p class="film-details__total-rating">${raiting}</p>
             </div>
           </div>
 
@@ -91,7 +92,7 @@ const createFilmPopup = (data) => {
               <td class="film-details__cell">${country}</td>
             </tr>
             <tr class="film-details__row">
-              <td class=" genres film-details__term">${insertGenreTitle}</td>
+              <td class="genres film-details__term">${insertGenreTitle}</td>
               <td class="film-details__cell">
                 ${genres}
             </tr>
@@ -142,13 +143,12 @@ const createFilmPopup = (data) => {
 
 const SHAKE_DURATION = 500;
 
-export default class FilmPopup extends SmartView {
+export default class FilmPopup extends Smart {
   constructor(film, onCardUpdate, renderCommentsCb) {
     super();
-    this._data = this._parseFilmTodata(film);
     this._onCardUpdate = onCardUpdate;
     this._renderComments = renderCommentsCb;
-
+    this._data = this._parseFilmTodata(film);
     this._isCommentFormDisabled = false;
     this._isOnlineListening = false;
 
@@ -165,14 +165,6 @@ export default class FilmPopup extends SmartView {
 
   getTemplate() {
     return createFilmPopup(this._data);
-  }
-
-  _setHandlers() {
-    this.getElement().querySelector(`.film-details__comment-input`).addEventListener(`input`, this._onCommentChange);
-    this.getElement().querySelector(`.film-details__emoji-list`).addEventListener(`click`, this._onEmojiInputClick);
-    this.getElement().querySelector(`#watchlist`).addEventListener(`click`, this._onWatchlistButtonClick);
-    this.getElement().querySelector(`#watched`).addEventListener(`click`, this._onHistoryButtonClick);
-    this.getElement().querySelector(`#favorite`).addEventListener(`click`, this._onFavouritesButtonClick);
   }
 
   _parseFilmTodata(film) {
@@ -245,6 +237,14 @@ export default class FilmPopup extends SmartView {
   setCrossClickHandler(callback) {
     this._callback.crossClick = callback;
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._onCrossClick);
+  }
+
+  _setHandlers() {
+    this.getElement().querySelector(`.film-details__comment-input`).addEventListener(`input`, this._onCommentChange);
+    this.getElement().querySelector(`.film-details__emoji-list`).addEventListener(`click`, this._onEmojiInputClick);
+    this.getElement().querySelector(`#watchlist`).addEventListener(`click`, this._onWatchlistButtonClick);
+    this.getElement().querySelector(`#watched`).addEventListener(`click`, this._onHistoryButtonClick);
+    this.getElement().querySelector(`#favorite`).addEventListener(`click`, this._onFavouritesButtonClick);
   }
 
   _restoreHandlers() {

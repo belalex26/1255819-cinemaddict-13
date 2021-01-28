@@ -1,5 +1,5 @@
-import Observer from './observer';
 import {ModelMethod} from '../const';
+import Observer from './observer';
 
 export default class CommentsModel extends Observer {
   constructor(api) {
@@ -23,19 +23,19 @@ export default class CommentsModel extends Observer {
     });
   }
 
-  deleteComment(commentToDelete) {
-    return this._api.deleteComment(commentToDelete.id)
-    .then(() => {
-      this._comments = this._comments.filter((comment) => (comment.id !== commentToDelete.id));
-      this.notify(ModelMethod.DELETE_COMMENT, commentToDelete);
-    });
-  }
-
   addComment(commentToAdd, filmId) {
     return this._api.addComment(commentToAdd, filmId)
     .then((response) => {
       this._comments = response.comments;
       this.notify(ModelMethod.ADD_COMMENT, response);
+    });
+  }
+
+  deleteComment(commentToDelete) {
+    return this._api.deleteComment(commentToDelete.id)
+    .then(() => {
+      this._comments = this._comments.filter((comment) => (comment.id !== commentToDelete.id));
+      this.notify(ModelMethod.DELETE_COMMENT, commentToDelete);
     });
   }
 
@@ -45,7 +45,7 @@ export default class CommentsModel extends Observer {
       author: `site`,
       date: new Date(),
       emotion: `angry`,
-      text: `Не удалось загрузить комментарии.`
+      text: `Не удалось загрузить комментарии`
     };
     this._comments = [errorComment];
     return errorComment;

@@ -1,4 +1,4 @@
-import {renderToast, isOnline} from '../utils';
+import {isOnline, renderToast} from '../utils';
 
 const createStoreStructure = (items) => {
   return items.reduce((acc, current) => {
@@ -41,16 +41,16 @@ export default class Provider {
     return Promise.resolve(film);
   }
 
-  sync() {
-    const updatedFilms = Object.values(this._store.getItems()).filter((film) => !film.isSynced).map(this._api.adaptFilmToServer);
-    if (updatedFilms.length) {
-      return isOnline() ? this._api.sync(updatedFilms) : Promise.reject(new Error(`No connection to sync`));
-    }
-    return Promise.resolve(`Sync not needed`);
-  }
-
   getComments(filmId) {
     return this._api.getComments(filmId);
+  }
+
+  addComment(comment, filmId) {
+    if (!isOnline()) {
+      renderToast(`Can't add comment offline`);
+      return Promise.reject(new Error(`No connection to add`));
+    }
+    return this._api.addComment(comment, filmId);
   }
 
   deleteComment(filmId) {
@@ -61,11 +61,11 @@ export default class Provider {
     return this._api.deleteComment(filmId);
   }
 
-  addComment(comment, filmId) {
-    if (!isOnline()) {
-      renderToast(`Can't add comment offline`);
-      return Promise.reject(new Error(`No connection to add`));
+  sync() {
+    const updatedFilms = Object.values(this._store.getItems()).filter((film) => !film.isSynced).map(this._api.adaptFilmToServer);
+    if (updatedFilms.length) {
+      return isOnline() ? this._api.sync(updatedFilms) : Promise.reject(new Error(`No connection to sync`));
     }
-    return this._api.addComment(comment, filmId);
+    return Promise.resolve(`Sync not needed`);
   }
 }

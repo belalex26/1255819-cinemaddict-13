@@ -52,7 +52,6 @@ const createCommentTemplate = (comment) => {
 </li>`;
 };
 
-
 export default class CommentView extends AbstractView {
   constructor(comment) {
     super();
@@ -75,5 +74,3 @@ export default class CommentView extends AbstractView {
     this.getElement().querySelector(`.film-details__comment-delete`).addEventListener(`click`, this._onDeleteButtonClick);
   }
 }
-
-
