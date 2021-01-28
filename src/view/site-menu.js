@@ -10,13 +10,13 @@ const createSiteMenu = (films, currentSort) => {
       favourites: acc.favourites + current.isFavourite,
     };
   }, {
-    inWatchist: 0,
+    inWatchlist: 0,
     inHistory: 0,
     favourites: 0
   });
 
   const getActiveClass = (elementFilterType) => {
-    return (elementFilterType === currentSort) ? `--active` : ``;
+    return (elementFilterType === currentSort) ? ` main-navigation__item--active` : ``;
   };
 
   return `<nav class="main-navigation">

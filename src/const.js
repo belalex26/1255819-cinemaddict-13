@@ -6,7 +6,7 @@ export const RenderPosition = {
 export const SortType = {
   DEFAULT: `default`,
   DATE: `date`,
-  RAITING: `raiting`,
+  RATING: `rating`,
   COMMENTS: `comments`
 };
 

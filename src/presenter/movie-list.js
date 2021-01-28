@@ -85,8 +85,8 @@ export default class MovieList {
     switch (chosenSortType) {
       case SortType.DATE:
         return filteredFilms.sort((previous, current) => current.date - previous.date);
-      case SortType.RAITING:
-        return filteredFilms.sort((previous, current) => current.raiting - previous.raiting);
+      case SortType.RATING:
+        return filteredFilms.sort((previous, current) => current.rating - previous.rating);
       case SortType.COMMENTS:
         return filteredFilms.sort((previous, current) => current.comments.length - previous.comments.length);
       default:
@@ -243,12 +243,12 @@ export default class MovieList {
   }
 
   _renderTopRaitedFilms() {
-    if (!this._getFilms(SortType.RAITING)[0].raiting) {
+    if (!this._getFilms(SortType.RATING)[0].raiting) {
       return;
     }
     render(this._siteCatalog, this._topRaitedContainerView);
     const topRaitedFilmsContainer = this._siteCatalog.getElement().querySelector(`.films-list--extra .films-list__container`);
-    this._getFilms(SortType.RAITING).slice(0, this._FILMS_TOP_RAITED_CARDS_NUMBER).forEach((film) => this._renderCard(topRaitedFilmsContainer, film, `raited`));
+    this._getFilms(SortType.RATING).slice(0, this._FILMS_TOP_RAITED_CARDS_NUMBER).forEach((film) => this._renderCard(topRaitedFilmsContainer, film, `raited`));
   }
 
   _renderMostCommentedFilms() {
