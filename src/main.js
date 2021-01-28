@@ -34,7 +34,7 @@ const changeSiteState = (action) => {
       break;
     case SiteState.TO_STATS:
       catalogPresenter.destroy();
-      stats = new Stats(filmsModel.getFilms(), userModel.getRaiting());
+      stats = new Stats(filmsModel.getFilms(), userModel.getRating());
       render(siteMain, stats);
       break;
   }

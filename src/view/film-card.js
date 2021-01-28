@@ -3,7 +3,7 @@ import AbstractView from './abstract-view';
 
 const createFilmCard = (film) => {
 
-  const {title, raiting, date, duration, genre, poster, description, comments} = film;
+  const {title, rating, date, duration, genre, poster, description, comments} = film;
 
   const maxLengthDescription = 139;
 
@@ -24,7 +24,7 @@ const createFilmCard = (film) => {
 
   return `<article class="film-card">
   <h3 class="film-card__title">${title}</h3>
-  <p class="film-card__rating">${raiting}</p>
+  <p class="film-card__rating">${rating}</p>
   <p class="film-card__info">
     <span class="film-card__year">${new Date(date).getFullYear()}</span>
     <span class="film-card__duration">${getDuration(duration)}</span>

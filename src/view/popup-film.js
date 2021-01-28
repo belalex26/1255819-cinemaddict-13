@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 const genreOneTitle = document.getElementsByClassName(`genres`);
 
 const createFilmPopup = (data) => {
-  const {title, originalTitle, raiting, date, duration, genre, poster, description, comments, director, writers, actors, country, age, userComment, chosenSmile, isInWatchlist, isInHistory, isFavourite} = data;
+  const {title, originalTitle, rating, date, duration, genre, poster, description, comments, director, writers, actors, country, age, userComment, chosenSmile, isInWatchlist, isInHistory, isFavourite} = data;
 
   const genres = genre.map((value, index) => {
     return `<span class="film-details__genre">${genre[index]}</span>`;
@@ -62,7 +62,7 @@ const createFilmPopup = (data) => {
             </div>
 
             <div class="film-details__rating">
-              <p class="film-details__total-rating">${raiting}</p>
+              <p class="film-details__total-rating">${rating}</p>
             </div>
           </div>
 
@@ -155,7 +155,7 @@ export default class FilmPopup extends Smart {
     this._onCrossClick = this._onCrossClick.bind(this);
     this._onCommentChange = this._onCommentChange.bind(this);
     this._onEmojiInputClick = this._onEmojiInputClick.bind(this);
-    this._onWatchlistButtonClick = this._onWatchlistButtonClick.bind(this);
+    this._onWatchListButtonClick = this._onWatchListButtonClick.bind(this);
     this._onHistoryButtonClick = this._onHistoryButtonClick.bind(this);
     this._onFavouritesButtonClick = this._onFavouritesButtonClick.bind(this);
     this.onCommentFormError = this.onCommentFormError.bind(this);
@@ -219,7 +219,7 @@ export default class FilmPopup extends Smart {
     this._renderComments(true);
   }
 
-  _onWatchlistButtonClick() {
+  _onWatchListButtonClick() {
     this._onCardUpdate(Category.WATCHLIST);
     this._data.isInWatchlist = !this._data.isInWatchlist;
   }
@@ -242,7 +242,7 @@ export default class FilmPopup extends Smart {
   _setHandlers() {
     this.getElement().querySelector(`.film-details__comment-input`).addEventListener(`input`, this._onCommentChange);
     this.getElement().querySelector(`.film-details__emoji-list`).addEventListener(`click`, this._onEmojiInputClick);
-    this.getElement().querySelector(`#watchlist`).addEventListener(`click`, this._onWatchlistButtonClick);
+    this.getElement().querySelector(`#watchlist`).addEventListener(`click`, this._onWatchListButtonClick);
     this.getElement().querySelector(`#watched`).addEventListener(`click`, this._onHistoryButtonClick);
     this.getElement().querySelector(`#favorite`).addEventListener(`click`, this._onFavouritesButtonClick);
   }

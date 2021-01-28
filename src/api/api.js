@@ -107,7 +107,7 @@ export default class Api {
       comments: film.comments,
       title: film.film_info.title,
       originalTitle: film.film_info.alternative_title,
-      raiting: film.film_info.total_rating,
+      rating: film.film_info.total_rating,
       poster: film.film_info.poster,
       age: film.film_info.age_rating,
       director: film.film_info.director,
@@ -136,7 +136,7 @@ export default class Api {
           "film_info": {
             "title": film.title,
             "alternative_title": film.originalTitle,
-            "total_rating": film.raiting,
+            "total_rating": film.rating,
             "poster": film.poster,
             "age_rating": film.age,
             "director": film.director,

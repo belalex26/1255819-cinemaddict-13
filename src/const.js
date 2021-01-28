@@ -12,7 +12,7 @@ export const SortType = {
 
 export const Category = {
   All: `all`,
-  WATCHLIST: `watchlist`,
+  WATCHLIST: `watchList`,
   HISTORY: `history`,
   FAVOURITES: `favourites`
 };
@@ -46,10 +46,10 @@ export const ModelMethod = {
   ADD_COMMENT: `addComment`,
   DELETE_COMMENT: `deleteComment`,
   SET_FILMS: `setFilms`,
-  UPDATE_USER_RAITING: `updateRaiting`
+  UPDATE_USER_RATING: `updateRating`
 };
 
-export const UserRaiting = {
+export const UserRating = {
   NOVICE: `novice`,
   FAN: `fan`,
   MOVIE_BUFF: `movie buff`
@@ -69,6 +69,6 @@ export const StatsPeriod = {
 };
 
 export const FilmCardContainer = {
-  RAITED: `raited`,
+  RATED: `rated`,
   COMMENTED: `commented`
 };
