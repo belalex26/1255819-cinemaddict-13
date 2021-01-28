@@ -16,7 +16,7 @@ const createSiteMenu = (films, currentSort) => {
   });
 
   const getActiveClass = (elementFilterType) => {
-    return (elementFilterType === currentSort) ? ` main-navigation__item--active` : ``;
+    return (elementFilterType === currentSort) ? `--active` : ``;
   };
 
   return `<nav class="main-navigation">
