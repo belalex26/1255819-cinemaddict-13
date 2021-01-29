@@ -1,6 +1,6 @@
-import SiteMenuView from '../view/site-menu';
-import {UserAction, ModelMethod, Category, SiteState, RenderPosition} from "../const.js";
+import {UserAction, ModelMethod, Category, SiteState, RenderPosition} from '../const';
 import {remove, render, replace} from '../utils';
+import SiteMenuView from '../view/site-menu';
 
 export default class Filters {
   constructor(filmsModel, filterModel, changeSiteStateCb) {
@@ -8,7 +8,7 @@ export default class Filters {
     this._filterModel = filterModel;
     this._changeSiteState = changeSiteStateCb;
     this._siteMenuView = null;
-    this._currentFilter = Category.All;
+    this._currentFilter = Category.ALL;
     this._isShowingFilms = true;
 
     this._onFilterChange = this._onFilterChange.bind(this);

@@ -7,7 +7,7 @@ const createMostCommentedContainer = () => {
   </section>`;
 };
 
-export default class MostCommentedContainer extends AbstractView {
+export default class MostCommentContainer extends AbstractView {
   getTemplate() {
     return createMostCommentedContainer();
   }

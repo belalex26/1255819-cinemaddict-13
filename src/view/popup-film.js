@@ -1,8 +1,8 @@
-import {EMOTIONS, Category} from '../const.js';
+import {EMOTIONS, Category} from '../const';
 import {getDuration} from '../utils';
 
 import Smart from './smart-view';
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 const genreOneTitle = document.getElementsByClassName(`genres`);
 

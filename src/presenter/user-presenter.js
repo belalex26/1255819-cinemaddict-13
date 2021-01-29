@@ -1,6 +1,5 @@
-import {render, remove, replace} from '../utils.js';
+import {render, remove, replace} from '../utils';
 import {ModelMethod} from '../const';
-
 import UserIconView from '../view/user-icon';
 
 export default class UserPresenter {

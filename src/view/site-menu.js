@@ -1,16 +1,16 @@
+import {Category} from '../const';
 import AbstractView from './abstract-view';
-import {Category} from "../const.js";
 
 const createSiteMenu = (films, currentSort) => {
 
   const stats = films.reduce((acc, current) => {
     return {
-      inWatchlist: acc.inWatchlist + current.isInWatchlist,
+      inWatchList: acc.inWatchList + current.isInWatchList,
       inHistory: acc.inHistory + current.isInHistory,
       favourites: acc.favourites + current.isFavourite,
     };
   }, {
-    inWatchlist: 0,
+    inWatchList: 0,
     inHistory: 0,
     favourites: 0
   });
@@ -21,8 +21,8 @@ const createSiteMenu = (films, currentSort) => {
 
   return `<nav class="main-navigation">
   <div class="main-navigation__items">
-    <a href="#all" class="main-navigation__item${getActiveClass(Category.All)}" data-filter-type="${Category.All}">All movies</a>
-    <a href="#watchlist" class="main-navigation__item${getActiveClass(Category.WATCHLIST)}" data-filter-type="${Category.WATCHLIST}">Watchlist <span class="main-navigation__item-count">${stats.inWatchlist}</span></a>
+    <a href="#all" class="main-navigation__item${getActiveClass(Category.ALL)}" data-filter-type="${Category.ALL}">All movies</a>
+    <a href="#watchlist" class="main-navigation__item${getActiveClass(Category.WATCHLIST)}" data-filter-type="${Category.WATCHLIST}">Watchlist <span class="main-navigation__item-count">${stats.inWatchList}</span></a>
     <a href="#history" class="main-navigation__item${getActiveClass(Category.HISTORY)}" data-filter-type="${Category.HISTORY}">History <span class="main-navigation__item-count">${stats.inHistory}</span></a>
     <a href="#favorites" class="main-navigation__item${getActiveClass(Category.FAVOURITES)}" data-filter-type="${Category.FAVOURITES}">Favorites <span class="main-navigation__item-count">${stats.favourites}</span></a>
   </div>

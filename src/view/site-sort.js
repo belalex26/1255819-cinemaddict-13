@@ -1,5 +1,5 @@
+import {SortType} from '../const';
 import AbstractView from './abstract-view';
-import {SortType} from "../const.js";
 
 const createSiteSort = (sortType) => {
   const getActiveClass = (elementSortType) => {

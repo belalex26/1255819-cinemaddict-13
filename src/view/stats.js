@@ -1,7 +1,7 @@
 import {StatsPeriod} from '../const';
 import Smart from './smart-view';
-import dayjs from "dayjs";
-import Chart from "chart.js";
+import dayjs from 'dayjs';
+import Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 const renderChart = (statisticCtx) => {

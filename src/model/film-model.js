@@ -1,5 +1,5 @@
-import Observer from './observer';
 import {ModelMethod} from '../const';
+import Observer from './observer';
 
 export default class FilmModel extends Observer {
   constructor(api) {

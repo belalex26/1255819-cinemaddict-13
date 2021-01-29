@@ -1,8 +1,7 @@
 import {render, replace, remove, isKeyPressed} from '../utils';
-
+import {Category, UserAction, ModelMethod} from '../const';
 import FilmCardView from '../view/film-card';
 import FilmPopupView from '../view/popup-film';
-import {Category, UserAction, ModelMethod} from "../const.js";
 import CommentPresenter from './comment-presenter';
 
 const ENTER = 13;
@@ -209,19 +208,19 @@ export default class Movie {
   }
 
   _onCardWatchListClick() {
-    const action = (this._filterModel.getFilter() !== Category.All && this._film.isInWatchlist) ? UserAction.UPDATE_FILM_CATEGORY_WITH_RERENDER : UserAction.UPDATE_FILM_CATEGORY;
+    const action = (this._filterModel.getFilter() !== Category.ALL && this._film.isInWatchList) ? UserAction.UPDATE_FILM_CATEGORY_WITH_RERENDER : UserAction.UPDATE_FILM_CATEGORY;
     this._filmChange(action, Object.assign(
         {},
         this._film,
         {
-          isInWatchlist: !this._film.isInWatchlist,
+          isInWatchList: !this._film.isInWatchList,
           isSynced: false
         }
     ));
   }
 
   _onCardFavouritesClick() {
-    const action = (this._filterModel.getFilter() !== Category.All && this._film.isFavourite) ? UserAction.UPDATE_FILM_CATEGORY_WITH_RERENDER : UserAction.UPDATE_FILM_CATEGORY;
+    const action = (this._filterModel.getFilter() !== Category.ALL && this._film.isFavourite) ? UserAction.UPDATE_FILM_CATEGORY_WITH_RERENDER : UserAction.UPDATE_FILM_CATEGORY;
     this._filmChange(action, Object.assign(
         {},
         this._film,
@@ -233,7 +232,7 @@ export default class Movie {
   }
 
   _onCardToHistoryClick() {
-    const action = (this._filterModel.getFilter() !== Category.All && this._film.isInHistory) ? UserAction.UPDATE_FILM_CATEGORY_WITH_RERENDER : UserAction.UPDATE_FILM_CATEGORY;
+    const action = (this._filterModel.getFilter() !== Category.ALL && this._film.isInHistory) ? UserAction.UPDATE_FILM_CATEGORY_WITH_RERENDER : UserAction.UPDATE_FILM_CATEGORY;
     this._filmChange(action, Object.assign(
         {},
         this._film,

@@ -1,10 +1,10 @@
-import Observer from './observer';
 import {Category, ModelMethod} from '../const';
+import Observer from './observer';
 
 export default class FilterModel extends Observer {
   constructor() {
     super();
-    this._filter = Category.All;
+    this._filter = Category.ALL;
     this._observers = {
       updateFilter: []
     };

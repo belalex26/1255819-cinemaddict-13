@@ -11,7 +11,7 @@ export const SortType = {
 };
 
 export const Category = {
-  All: `all`,
+  ALL: `all`,
   WATCHLIST: `watchList`,
   HISTORY: `history`,
   FAVOURITES: `favourites`

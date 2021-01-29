@@ -1,5 +1,5 @@
+import {ModelMethod, UserRating} from '../const';
 import Observer from './observer';
-import {ModelMethod, UserRating} from "../const";
 
 export default class UserModel extends Observer {
   constructor(filmsModel) {

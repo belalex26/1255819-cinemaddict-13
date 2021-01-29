@@ -34,7 +34,7 @@ const createFilmCard = (film) => {
   <p class="film-card__description">${shortenDescription}</p>
   <a class="film-card__comments">${comments.length} ${comments.length === 1 ? `comment` : `comments`}</a>
   <div class="film-card__controls">
-    <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist${getFilmStatusClass(`isInWatchlist`)}" type="button">Add to watchlist</button>
+    <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist${getFilmStatusClass(`isInWatchList`)}" type="button">Add to watchlist</button>
     <button class="film-card__controls-item button film-card__controls-item--mark-as-watched${getFilmStatusClass(`isInHistory`)}" type="button">Mark as watched</button>
     <button class="film-card__controls-item button film-card__controls-item--favorite${getFilmStatusClass(`isFavourite`)}" type="button">Mark as favorite</button>
   </div>

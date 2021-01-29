@@ -118,7 +118,7 @@ export default class Api {
       duration: film.film_info.runtime,
       genre: film.film_info.genre,
       description: film.film_info.description,
-      isInWatchlist: film.user_details.watchlist,
+      isInWatchList: film.user_details.watchlist,
       isInHistory: film.user_details.already_watched,
       watchingDate: new Date(film.user_details.watching_date),
       isFavourite: film.user_details.favorite,
@@ -151,7 +151,7 @@ export default class Api {
             "description": film.description
           },
           "user_details": {
-            "watchlist": film.isInWatchlist,
+            "watchlist": film.isInWatchList,
             "already_watched": film.isInHistory,
             "watching_date": film.watchingDate.toISOString(),
             "favorite": film.isFavourite,

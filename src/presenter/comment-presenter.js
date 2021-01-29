@@ -1,6 +1,5 @@
 import {render, remove} from '../utils';
 import {UserAction} from '../const';
-
 import CommentView from '../view/comment';
 
 const DeleteButtonText = {

@@ -1,14 +1,14 @@
-import {render, remove, filter} from '../utils.js';
-import {SortType, UserAction, ModelMethod, FilmCardContainer} from "../const.js";
+import {render, remove, filter} from '../utils';
+import {SortType, UserAction, ModelMethod, FilmCardContainer} from '../const';
 
 import SiteSortView from '../view/site-sort';
 import SiteCatalogView from '../view/catalog-films';
 import ShowMoreButtonView from '../view/show-more-button';
 import TopRatedContainerView from '../view/top-rating-container';
-import MostCommentedContainerView from '../view/most-commented-container';
+import MostCommentedContainerView from '../view/most-comment-container';
 import LoadingView from '../view/loading';
 import NoFilmsView from '../view/no-films';
-import Movie from './movie.js';
+import Movie from './movie';
 
 
 export default class MovieList {
