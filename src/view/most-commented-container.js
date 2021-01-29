@@ -8,9 +8,7 @@ const createMostCommentedContainer = () => {
 };
 
 export default class MostCommentedContainer extends AbstractView {
-
   getTemplate() {
     return createMostCommentedContainer();
   }
 }
-

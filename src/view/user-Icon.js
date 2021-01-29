@@ -1,20 +1,20 @@
 import AbstractView from './abstract-view';
 
-const createUserIcon = (avatar, raiting) => {
+const createUserIcon = (userRating) => {
+
   return `<section class="header__profile profile">
-  <p class="profile__rating">${raiting}</p>
-  <img class="profile__avatar" src="${avatar}" alt="Avatar" width="35" height="35">
+  ${userRating ? `<p class="profile__rating">${userRating}</p>` : ``}
+  <img class="profile__avatar" src="./images/bitmap@2x.png" alt="Avatar" width="35" height="35">
 </section>`;
 };
 
 export default class UserIcon extends AbstractView {
-  constructor(avatar, raiting) {
+  constructor(userRating) {
     super();
-    this._userRaiting = raiting;
-    this._userAvater = avatar;
+    this._userRating = userRating;
   }
 
   getTemplate() {
-    return createUserIcon(this._userAvater, this._userRaiting);
+    return createUserIcon(this._userRating);
   }
 }

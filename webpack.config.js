@@ -11,6 +11,6 @@ module.exports = {
     contentBase: path.resolve(__dirname, 'public'),
     watchContentBase: true,
     overlay: true,
-    open: true
+    open: true,
   }
 }
