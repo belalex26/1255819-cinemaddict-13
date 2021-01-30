@@ -1,6 +1,6 @@
 import {render, remove, replace} from '../utils';
 import {ModelMethod} from '../const';
-import UserIconView from '../view/user-icon';
+import UserIconView from '../view/user-icon-view';
 
 export default class UserPresenter {
   constructor(userModel) {

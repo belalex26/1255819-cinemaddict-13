@@ -1,17 +1,17 @@
 import {render, remove, filter} from '../utils';
 import {SortType, UserAction, ModelMethod, FilmCardContainer} from '../const';
 
-import SiteSortView from '../view/site-sort';
-import SiteCatalogView from '../view/catalog-films';
-import ShowMoreButtonView from '../view/show-more-button';
-import TopRatedContainerView from '../view/top-rating-container';
-import MostCommentedContainerView from '../view/most-comment-container';
-import LoadingView from '../view/loading';
-import NoFilmsView from '../view/no-films';
-import Movie from './movie';
+import SiteSortView from '../view/site-sort-view';
+import CatalogFilmsView from '../view/catalog-films-view';
+import ShowMoreButtonView from '../view/show-more-button-view';
+import TopRatingContainer from '../view/top-rating-container';
+import MostCommentContainer from '../view/most-comment-container';
+import LoadingView from '../view/loading-view';
+import NoFilmsView from '../view/no-films-view';
+import MoviePresenter from './movie-presenter';
 
 
-export default class MovieList {
+export default class MovieListPresenter {
   constructor(filmsmodel, filterModel, commentsModel) {
     this._filmsModel = filmsmodel;
     this._filterModel = filterModel;
@@ -25,8 +25,8 @@ export default class MovieList {
     this._filmsSortedByDate = null;
 
     this._showMoreButton = new ShowMoreButtonView();
-    this._topRatedContainerView = new TopRatedContainerView();
-    this._mostCommentedContainerView = new MostCommentedContainerView();
+    this._topRatedContainerView = new TopRatingContainer();
+    this._mostCommentedContainerView = new MostCommentContainer();
     this._loadingView = new LoadingView();
 
     this._filmCardPresenterGroups = {
@@ -204,7 +204,7 @@ export default class MovieList {
   }
 
   _renderCard(container, film, block) {
-    const filmPresenter = new Movie(this._commentsModel, this._onViewAction, this._closeAllPopups, this._filterModel, this.updateMostCommentedBlock);
+    const filmPresenter = new MoviePresenter(this._commentsModel, this._onViewAction, this._closeAllPopups, this._filterModel, this.updateMostCommentedBlock);
     filmPresenter.init(film, container);
     switch (block) {
       case FilmCardContainer.RATED:
@@ -271,7 +271,7 @@ export default class MovieList {
     }
 
     if (!(this._siteCatalog)) {
-      this._siteCatalog = new SiteCatalogView();
+      this._siteCatalog = new CatalogFilmsView();
     }
 
     if (!this._getFilms().length) {

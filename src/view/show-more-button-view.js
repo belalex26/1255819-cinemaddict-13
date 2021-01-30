@@ -4,7 +4,7 @@ const createShowMoreButton = () => {
   return `<button class="films-list__show-more">Show more</button>`;
 };
 
-export default class ShowMoreButton extends AbstractView {
+export default class ShowMoreButtonView extends AbstractView {
   constructor() {
     super();
     this._onShowMoreButtonClick = this._onShowMoreButtonClick.bind(this);

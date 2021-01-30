@@ -30,7 +30,7 @@ const createSiteMenu = (films, currentSort) => {
 </nav>`;
 };
 
-export default class SiteMenu extends AbstractView {
+export default class SiteMenuView extends AbstractView {
   constructor(films, currentFilter) {
     super();
     this._films = films;

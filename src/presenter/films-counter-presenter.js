@@ -1,9 +1,9 @@
 import {render, remove, replace} from '../utils';
 import {ModelMethod} from '../const';
 
-import FilmsNumberView from '../view/films-number';
+import FilmsNumberView from '../view/films-number-view';
 
-export default class FilmsCounter {
+export default class FilmsCounterPresenter {
   constructor(filmsModel) {
     this._filmsModel = filmsModel;
     this._onFilmsGet = this._onFilmsGet.bind(this);

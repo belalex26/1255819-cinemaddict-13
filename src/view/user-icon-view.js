@@ -8,7 +8,7 @@ const createUserIcon = (userRating) => {
 </section>`;
 };
 
-export default class UserIcon extends AbstractView {
+export default class UserIconView extends AbstractView {
   constructor(userRating) {
     super();
     this._userRating = userRating;

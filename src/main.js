@@ -7,11 +7,11 @@ import CommentsModel from './model/comments-model';
 import UserModel from './model/user-model';
 
 import UserPresenter from './presenter/user-presenter';
-import MovieListPresenter from './presenter/movie-list';
+import MovieListPresenter from './presenter/movie-list-presenter';
 import FiltersPresenters from './presenter/filters-presenter';
-import FilmsCounterPresenter from './presenter/films-counter';
+import FilmsCounterPresenter from './presenter/films-counter-presenter';
 
-import Stats from './view/stats';
+import StatsView from './view/stats-view';
 
 import Api from './api/api';
 import Provider from './api/provider';
@@ -34,7 +34,7 @@ const changeSiteState = (action) => {
       break;
     case SiteState.TO_STATS:
       catalogPresenter.destroy();
-      stats = new Stats(filmsModel.getFilms(), userModel.getRating());
+      stats = new StatsView(filmsModel.getFilms(), userModel.getRating());
       render(siteMain, stats);
       break;
   }

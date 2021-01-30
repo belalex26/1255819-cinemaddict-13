@@ -1,13 +1,13 @@
 import {render, replace, remove, isKeyPressed} from '../utils';
 import {Category, UserAction, ModelMethod} from '../const';
-import FilmCardView from '../view/film-card';
-import FilmPopupView from '../view/popup-film';
+import FilmCardView from '../view/film-card-view';
+import PopupFilmView from '../view/popup-film-view';
 import CommentPresenter from './comment-presenter';
 
 const ENTER = 13;
 const pageBody = document.querySelector(`body`);
 
-export default class Movie {
+export default class MoviePresenter {
   constructor(commentsModel, filmChangeCb, closePopupsCb, filterModel, updateMostCommentedBlockCb) {
     this._commentsModel = commentsModel;
 
@@ -196,7 +196,7 @@ export default class Movie {
   _openPopup(evt) {
     evt.preventDefault();
     this._closePopups();
-    this._popup = new FilmPopupView(this._film, this.onCardUpdate, this._renderCommentsToPopup);
+    this._popup = new PopupFilmView(this._film, this.onCardUpdate, this._renderCommentsToPopup);
 
     this._renderCommentsToPopup();
 

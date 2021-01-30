@@ -1,7 +1,7 @@
 import {EMOTIONS, Category} from '../const';
 import {getDuration} from '../utils';
 
-import Smart from './smart-view';
+import SmartView from './smart-view';
 import dayjs from 'dayjs';
 
 const genreOneTitle = document.getElementsByClassName(`genres`);
@@ -143,7 +143,7 @@ const createFilmPopup = (data) => {
 
 const SHAKE_DURATION = 500;
 
-export default class FilmPopup extends Smart {
+export default class PopupFilmView extends SmartView {
   constructor(film, onCardUpdate, renderCommentsCb) {
     super();
     this._onCardUpdate = onCardUpdate;

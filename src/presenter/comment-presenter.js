@@ -1,6 +1,6 @@
 import {render, remove} from '../utils';
 import {UserAction} from '../const';
-import CommentView from '../view/comment';
+import CommentView from '../view/comment-view';
 
 const DeleteButtonText = {
   COMMON: `Delete`,
@@ -9,7 +9,7 @@ const DeleteButtonText = {
 
 const SHAKE_DURATION = 500;
 
-export default class Comment {
+export default class CommentPresenter {
   constructor(commentsChangeCb, comment) {
     this._comment = comment;
     this._commentsChange = commentsChangeCb;

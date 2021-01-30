@@ -1,5 +1,5 @@
 import {StatsPeriod} from '../const';
-import Smart from './smart-view';
+import SmartView from './smart-view';
 import dayjs from 'dayjs';
 import Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -167,7 +167,7 @@ const createStats = (data) => {
 </section>`;
 };
 
-export default class Stats extends Smart {
+export default class StatsView extends SmartView {
   constructor(films, userRating) {
     super();
     this._data = {

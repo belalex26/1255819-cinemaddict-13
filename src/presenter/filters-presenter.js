@@ -1,8 +1,8 @@
 import {UserAction, ModelMethod, Category, SiteState, RenderPosition} from '../const';
 import {remove, render, replace} from '../utils';
-import SiteMenuView from '../view/site-menu';
+import SiteMenuView from '../view/site-menu-view';
 
-export default class Filters {
+export default class FiltersPresenter {
   constructor(filmsModel, filterModel, changeSiteStateCb) {
     this._filmsModel = filmsModel;
     this._filterModel = filterModel;

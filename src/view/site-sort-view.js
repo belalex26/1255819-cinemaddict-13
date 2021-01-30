@@ -12,7 +12,7 @@ const createSiteSort = (sortType) => {
 </ul>`;
 };
 
-export default class SiteSort extends AbstractView {
+export default class SiteSortView extends AbstractView {
   constructor(sortType) {
     super();
     this.sortType = sortType;
